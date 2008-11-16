@@ -1,0 +1,12 @@
+#-----------------------------------------------------------------
+# Use this file to add customized Bnd instructions for the bundle
+#-----------------------------------------------------------------
+
+Export-Package: \
+ ${bundle.namespace};version="3.0"
+
+Import-Package: \
+ ${bundle.namespace};version="[3.0,4.0)"
+
+Private-Package:
+

@@ -1,0 +1,42 @@
+#!/bin/sh
+
+_EXAMPLE_DIR_=`dirname "$0"`
+_EXAMPLE_BSN_=org.foo.log.service
+_EXAMPLE_VER_=1.0
+
+_EXAMPLE_JAR_=${_EXAMPLE_BSN_}-${_EXAMPLE_VER_}.jar
+
+_BUNDLES_=$1,$2,$3,$4,$5,$6,$7,$8
+
+if [ "${_BUNDLES_}" = ",,,,,,," ]
+then
+  echo
+  echo "Dynamic service examples"
+  echo "------------------------"
+  echo
+  echo "1) Broken lookup (dangling field)"
+  echo "2) Broken lookup (one-time lookup)"
+  echo "3) Broken lookup (race condition)"
+  echo "4) Correct lookup"
+  echo "5) Broken listener"
+  echo "6) Correct listener"
+  echo "7) Standard tracker"
+  echo "8) Customized tracker"
+  echo
+
+  read -p "Choose an example (1-8): " _BUNDLES_
+
+  echo
+fi
+
+cd ${_EXAMPLE_DIR_}
+
+if [ -n "${_BUNDLES_}" ]
+then
+  if [ ! -r ${_EXAMPLE_BSN_}/target/${_EXAMPLE_JAR_} ]
+  then
+    mvn install
+  fi
+  exec mvn pax:provision "-P${_BUNDLES_}"
+fi
+
