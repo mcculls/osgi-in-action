@@ -2,6 +2,7 @@
 # Use this file to add customized Bnd instructions for the bundle
 #-----------------------------------------------------------------
 
+Main-Class: org.foo.paint.PaintFrame
 Import-Package: \
  org.foo.*;version="[2.0,3.0)", \
  javax.swing

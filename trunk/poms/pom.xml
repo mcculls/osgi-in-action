@@ -16,9 +16,10 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>platform</module>
     <module>wrappers</module>
     <module>compiled</module>
+    <module>platform</module>
+    <module>launcher</module>
   </modules>
 
   <build>

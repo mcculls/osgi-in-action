@@ -9,16 +9,16 @@
   </parent>
 
   <properties>
-    <bundle.namespace>org.foo.log.service</bundle.namespace>
+    <bundle.namespace>org.foo.shell</bundle.namespace>
     <bundle.symbolicName>${bundle.namespace}</bundle.symbolicName>
   </properties>
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>examples.osgi-in-action.chapter04.dynamics</groupId>
+  <groupId>examples.osgi-in-action.chapter03</groupId>
   <artifactId>${bundle.symbolicName}</artifactId>
   <version>1.0</version>
 
-  <name>Dummy LogService</name>
+  <name>Simple Shell</name>
 
   <packaging>bundle</packaging>
 
@@ -27,29 +27,6 @@
       <groupId>org.osgi</groupId>
       <artifactId>osgi_R4_core</artifactId>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>osgi_R4_compendium</artifactId>
-      <optional>true</optional>
-      <scope>compile</scope>
-    </dependency>
-    <!--
-     | only needed for the standalone test
-    -->
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.shell</artifactId>
-      <version>1.0.2</version>
-      <optional>true</optional>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.shell.tui</artifactId>
-      <version>1.0.2</version>
-      <optional>true</optional>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 

@@ -34,6 +34,7 @@ limitations under the License.
 
   <modules>
     <module>poms</module>
+    <module>launcher</module>
     <module>chapter01</module>
     <module>chapter02</module>
     <module>chapter03</module>
