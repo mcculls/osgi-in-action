@@ -11,5 +11,5 @@ fi
 
 cd target/launch
 
-java -jar launcher.jar bundles &
+java -jar launcher.jar bundles
 

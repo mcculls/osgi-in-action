@@ -8,7 +8,7 @@ IF NOT EXIST target/launch CALL mvn install
 
 cd target/launch
 
-START javaw -jar launcher.jar bundles
+java -jar launcher.jar bundles
 
 popd
 

@@ -2,6 +2,8 @@
 
 _EXAMPLE_DIR_=`dirname "$0"`
 
+cd ${_EXAMPLE_DIR_}
+
 _BUNDLES_=$1,$2,$3,$4,$5,$6,$7,$8
 
 if [ "${_BUNDLES_}" = ",,,,,,," ]
@@ -25,10 +27,9 @@ then
   echo
 fi
 
-cd ${_EXAMPLE_DIR_}
+mvn clean install "-P${_BUNDLES_}"
 
-if [ -n "${_BUNDLES_}" ]
-then
-  exec mvn install pax:provision "-P${_BUNDLES_}"
-fi
+cd target/launch
+
+java -jar launcher.jar bundles
 

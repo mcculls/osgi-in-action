@@ -25,6 +25,7 @@
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
+          <finalName>paint</finalName>
           <archive>
             <manifest>
               <mainClass>org.foo.paint.PaintFrame</mainClass>

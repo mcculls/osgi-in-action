@@ -1,18 +1,14 @@
 @ECHO OFF
 
 SET _EXAMPLE_DIR_=%~dp0
-SET _EXAMPLE_BSN_=org.foo.main
-SET _EXAMPLE_VER_=4.0
-
-SET _EXAMPLE_JAR_=%_EXAMPLE_BSN_%-%_EXAMPLE_VER_%.jar
 
 pushd %_EXAMPLE_DIR_%
 
-IF NOT EXIST %_EXAMPLE_BSN_%/target/%_EXAMPLE_JAR_% CALL mvn install
+IF NOT EXIST target/launch CALL mvn install
 
-cd %_EXAMPLE_BSN_%
+cd target/launch
 
-START javaw -jar target/%_EXAMPLE_JAR_%
+START javaw -jar launcher.jar bundles
 
 popd
 

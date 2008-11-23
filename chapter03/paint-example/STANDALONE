@@ -1,19 +1,15 @@
 #!/bin/sh
 
 _EXAMPLE_DIR_=`dirname "$0"`
-_EXAMPLE_BSN_=org.foo.main
-_EXAMPLE_VER_=3.0
-
-_EXAMPLE_JAR_=${_EXAMPLE_BSN_}-${_EXAMPLE_VER_}.jar
 
 cd ${_EXAMPLE_DIR_}
 
-if [ ! -r ${_EXAMPLE_BSN_}/target/${_EXAMPLE_JAR_} ]
+if [ ! -r target/launch ]
 then
   mvn install
 fi
 
-cd ${_EXAMPLE_BSN_}
+cd target/launch
 
-java -jar target/${_EXAMPLE_JAR_} &
+java -jar launcher.jar bundles &
 

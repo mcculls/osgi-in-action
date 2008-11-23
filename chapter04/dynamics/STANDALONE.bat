@@ -2,6 +2,8 @@
 
 SET _EXAMPLE_DIR_=%~dp0
 
+pushd %_EXAMPLE_DIR_%
+
 SET _BUNDLES_=%1,%2,%3,%4,%5,%6,%7,%8
 
 IF NOT "%_BUNDLES_%"==",,,,,,," GOTO CHOSEN
@@ -28,9 +30,11 @@ IF NOT "%_BUNDLES_%"==",,,,,,," GOTO CHOSEN
 
 :CHOSEN
 
-pushd %_EXAMPLE_DIR_%
+CALL mvn clean install "-P%_BUNDLES_%"
 
-IF NOT ""=="%_BUNDLES_%" CALL mvn install pax:provision "-P%_BUNDLES_%"
+cd target/launch
+
+java -jar launcher.jar bundles
 
 popd
 
