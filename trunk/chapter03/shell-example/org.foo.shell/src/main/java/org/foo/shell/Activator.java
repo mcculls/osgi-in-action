@@ -1,8 +1,16 @@
 package org.foo.shell;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -98,6 +106,12 @@ public class Activator implements BundleActivator {
       "uninstall <id> - Uninstall the bundle with the given bundle id."));
     commands.put("update", new UpdateCommand().setContext(context).setHelp(
       "update <id> - Update the bundle with the given bundle id."));
+    commands.put("startlevel", new StartLevelCommand().setContext(context).setHelp(
+      "startlevel [<level>] - Get or set the framework startlevel."));
+    commands.put("bundlelevel", new BundleLevelCommand().setContext(context).setHelp(
+      "bundlelevel [-i] [<level>] <id> - Get or set (initial) bundle startlevel."));
+    commands.put("refresh", new RefreshCommand().setContext(context).setHelp("refresh [<id> ...] - refresh bundles."));
+    commands.put("resolve", new ResolveCommand().setContext(context).setHelp("resolve [<id> ...] - resolve bundles."));
     commands.put("ps", new PsCommand().setContext(context).setHelp(
       "ps - Print information about the currently installed bundles"));
 

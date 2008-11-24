@@ -78,7 +78,6 @@ public class Main {
       // Configure and start the OSGi framework.
       final Map configMap = new HashMap();
       configMap.put(Constants.FRAMEWORK_STORAGE_CLEAN, "onFirstInit");
-      configMap.put("felix.cache.rootdir", "target");
       m_framework = new Felix(configMap);
       m_framework.start();
 
