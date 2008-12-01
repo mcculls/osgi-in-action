@@ -29,10 +29,9 @@ public class Main {
 
   public static void main(String[] args) throws Exception {
     // Must specify a bundle directory.
-    if (args.length != 1)
-    {
-        System.out.println("Usage: <bundle-directory>");
-        System.exit(0);
+    if (args.length != 1) {
+      System.out.println("Usage: <bundle-directory>");
+      System.exit(0);
     }
 
     // Save arguments.
@@ -87,7 +86,7 @@ public class Main {
         Bundle b = context.installBundle(((File) bundleList.get(i)).toURI().toString());
         installedList.add(b);
         if (b.getHeaders().get("Main-Class") != null) {
-            mainBundle = b;
+          mainBundle = b;
         }
       }
 
@@ -103,21 +102,17 @@ public class Main {
 
     // If a bundle exists with a "Main-Class", then load the class and
     // invoke its static main method.
-    if (mainBundle != null)
-    {
+    if (mainBundle != null) {
       final String mainClassName = (String) mainBundle.getHeaders().get("Main-Class");
-      if (mainClassName != null)
-      {
+      if (mainClassName != null) {
         final Class mainClass = mainBundle.loadClass(mainClassName);
         try {
           Method method = mainClass.getMethod("main", new Class[] { String[].class });
           method.invoke(null, new Object[] { new String[0] });
         } catch (Exception ex) {
-          System.err.println("Error invoking main method: "
-            + ex + " cause = " + ex.getCause());
+          System.err.println("Error invoking main method: " + ex + " cause = " + ex.getCause());
         }
-      }
-      else {
+      } else {
         System.err.println("Main class not found: " + mainClassName);
       }
     }

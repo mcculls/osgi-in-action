@@ -16,7 +16,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>examples.osgi-in-action.chapter01.greeting-example.service</groupId>
   <artifactId>${bundle.symbolicName}</artifactId>
-  <version>1.0</version>
+  <version>3.0</version>
 
   <name>Greeting Client</name>
 

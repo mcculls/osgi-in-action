@@ -1,8 +1,8 @@
 #!/bin/sh
 
 _EXAMPLE_DIR_=`dirname "$0"`
-_EXAMPLE_BSN_=org.foo.hello.service
-_EXAMPLE_VER_=1.0
+_EXAMPLE_BSN_=org.foo.hello.main
+_EXAMPLE_VER_=3.0
 
 _EXAMPLE_JAR_=${_EXAMPLE_BSN_}-${_EXAMPLE_VER_}.jar
 
@@ -13,5 +13,7 @@ then
   mvn install
 fi
 
-exec mvn pax:provision
+cd ${_EXAMPLE_BSN_}
+
+java -jar target/${_EXAMPLE_JAR_}
 

@@ -17,8 +17,8 @@
 
   <modules>
     <module>org.foo.hello</module>
-    <module>org.foo.hello.service</module>
     <module>org.foo.hello.client</module>
+    <module>org.foo.hello.main</module>
   </modules>
 
 </project>
