@@ -1,13 +1,8 @@
 package org.foo.shell;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import org.osgi.framework.BundleEvent;
-import org.osgi.framework.BundleListener;
-import org.osgi.framework.FrameworkEvent;
-import org.osgi.framework.FrameworkListener;
+import java.util.*;
+import org.osgi.framework.*;
 
 public class HistoryDecorator implements Command, History, FrameworkListener, BundleListener {
   private final List<String> m_history = Collections.synchronizedList(new ArrayList<String>());

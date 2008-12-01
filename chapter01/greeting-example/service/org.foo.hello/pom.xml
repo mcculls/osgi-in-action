@@ -22,4 +22,12 @@
 
   <packaging>bundle</packaging>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>osgi_R4_core</artifactId>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+
 </project>

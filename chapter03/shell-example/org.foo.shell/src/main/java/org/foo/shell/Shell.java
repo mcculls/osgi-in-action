@@ -1,8 +1,6 @@
 package org.foo.shell;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 
 public class Shell implements Runnable {
   private final Command m_command;
