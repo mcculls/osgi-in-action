@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <relativePath>../../poms/compiled/</relativePath>
+    <groupId>examples.osgi-in-action.build</groupId>
+    <artifactId>compiled-bundle-settings</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+    <bundle.namespace>org.foo.paint</bundle.namespace>
+    <bundle.symbolicName>${bundle.namespace}</bundle.symbolicName>
+  </properties>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>examples.osgi-in-action.chapter02.paint-nonmodular</groupId>
+  <artifactId>${bundle.symbolicName}</artifactId>
+  <version>1.0</version>
+
+  <name>Simple Non-modular Paint</name>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <finalName>paint</finalName>
+          <archive>
+            <manifest>
+              <mainClass>org.foo.paint.PaintFrame</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

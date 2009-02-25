@@ -1,0 +1,11 @@
+#-----------------------------------------------------------------
+# Use this file to add customized Bnd instructions for the bundle
+#-----------------------------------------------------------------
+
+Extension-Name:  Square
+Extension-Icon:  ${findpath;.*/square.png}
+Extension-Class: ${bundle.namespace}.Square
+
+Import-Package: \
+ org.foo.shape;version="[3.0,4.0)"
+

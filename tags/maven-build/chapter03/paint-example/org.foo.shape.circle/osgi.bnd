@@ -1,0 +1,11 @@
+#-----------------------------------------------------------------
+# Use this file to add customized Bnd instructions for the bundle
+#-----------------------------------------------------------------
+
+Extension-Name:  Circle
+Extension-Icon:  ${findpath;.*/circle.png}
+Extension-Class: ${bundle.namespace}.Circle
+
+Import-Package: \
+ org.foo.shape;version="[3.0,4.0)"
+

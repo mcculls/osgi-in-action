@@ -1,0 +1,38 @@
+#!/bin/sh
+
+_EXAMPLE_DIR_=`dirname "$0"`/..
+
+cd ${_EXAMPLE_DIR_}
+
+echo
+echo "---------------------------------------------------"
+echo " BUILDING OSGi-in-Action CODE EXAMPLES FOR ECLIPSE "
+echo "---------------------------------------------------"
+echo
+
+read -p "Path to existing Eclipse workspace? " _WORKSPACE_
+echo
+
+if [ -d "${_WORKSPACE_}" ]
+then
+  echo "Adding M2_REPO classpath variable to: ${_WORKSPACE_}"
+  echo
+  mvn -N eclipse:configure-workspace "-Declipse.workspace=${_WORKSPACE_}"
+else
+  echo "No such directory: ${_WORKSPACE_}"
+fi
+
+echo
+echo "Generating Eclipse project files"
+echo
+
+mvn install pax:eclipse
+
+echo
+echo "----------------------------------------------------"
+echo " TO IMPORT THE EXAMPLES INTO YOUR ECLIPSE WORKSPACE "
+echo "----------------------------------------------------"
+echo
+echo " File... Import... Existing Projects into Workspace "
+echo
+

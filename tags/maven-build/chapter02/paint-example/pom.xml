@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="CP1252"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <relativePath>../../poms/launcher/</relativePath>
+    <groupId>examples.osgi-in-action.build</groupId>
+    <artifactId>simple-launcher-settings</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>examples.osgi-in-action.chapter02</groupId>
+  <artifactId>paint-example</artifactId>
+
+  <name>OSGi in Action - modular paint example</name>
+
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>org.foo.shape</module>
+    <module>org.foo.shape.circle</module>
+    <module>org.foo.shape.square</module>
+    <module>org.foo.shape.triangle</module>
+    <module>org.foo.paint</module>
+  </modules>
+
+</project>

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+_EXAMPLE_DIR_=`dirname "$0"`
+
+cd ${_EXAMPLE_DIR_}
+
+if [ ! -r target/paint.jar ]
+then
+  mvn install
+fi
+
+java -jar target/paint.jar &
+
