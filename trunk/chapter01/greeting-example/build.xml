@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<project name="greeting.example" default="dist">
+
+  <dirname property="greeting.dir" file="${ant.file.greeting.example}"/>
+  <property file="${greeting.dir}/build.properties"/>
+  <import file="${greeting.dir}/../build.xml"/>
+
+  <property name="build.cp" value="${felix.jar}"/>
+
+</project>
