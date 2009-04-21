@@ -4,11 +4,13 @@
   <dirname property="root.dir" file="${ant.file.common}"/>
   <property file="${root.dir}/common/build.properties"/>
 
+  <available file="${src}" type="dir" property="have.source"/>
+
   <pathconvert property="not.leaf" setonempty="false">
     <fileset dir="." includes="*/build.xml"/>
   </pathconvert>
 
-  <target name="compile">
+  <target name="compile" if="have.source">
     <path id="compile.classpath" path="${build.cp}">
       <fileset dir="${root.dir}/lib" includes="osgi.*.jar"/>
       <fileset dir="${dist}" includes="*.jar"/>
@@ -27,7 +29,7 @@
 
   <taskdef resource="aQute/bnd/ant/taskdef.properties" classpath="${bnd.jar}"/>
 
-  <target name="local.dist" unless="not.leaf">
+  <target name="local.dist" if="have.source" unless="not.leaf">
     <antcall target="compile"/>
     <pathconvert pathsep="," dirsep="/" property="-classpath">
       <fileset dir="${root.dir}/lib" includes="osgi.*.jar"/>
@@ -35,7 +37,7 @@
     <bnd files="build.properties" classpath="${build}"/>
   </target>
 
-  <target name="local.pde" unless="not.leaf">
+  <target name="local.pde" if="have.source" unless="not.leaf">
     <antcall target="local.dist"/>
     <copy file="${root.dir}/common/pde.project" tofile=".project">
       <filterset>
@@ -48,11 +50,16 @@
         <filter token="BUILD" value="${build}"/>
       </filterset>
     </copy>
-    <unjar src="${-output}" dest=".">
+    <unjar src="${-output}" dest="build">
       <patternset>
         <include name="META-INF/MANIFEST.MF"/>
       </patternset>
     </unjar>
+    <mkdir dir="META-INF/embedded"/>
+    <concat destfile="META-INF/MANIFEST.MF">
+      <header file="${root.dir}/common/MANIFEST.MF"/>
+      <path path="build/META-INF/MANIFEST.MF"/>
+    </concat>
   </target>
 
   <target name="local.clean">

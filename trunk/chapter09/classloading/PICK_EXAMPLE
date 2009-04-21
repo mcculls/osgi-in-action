@@ -1,0 +1,49 @@
+#!/bin/sh
+
+_EXAMPLE_DIR_=`dirname "$0"`
+
+cd ${_EXAMPLE_DIR_}
+
+_OPTION_=$1
+
+if [ "${_OPTION_}" = "" ]
+then
+  echo
+  echo "Example classloading issues"
+  echo "---------------------------"
+  echo
+  echo "1) ClassNotFoundException"
+  echo "2) NoClassDefFoundException"
+  echo "3) ClassCastException"
+  echo "4) Class.forName issues"
+  echo "5) TCCL loading issues"
+  echo "0) exit"
+  echo
+
+  read -p "Choose an example (1-5): " _OPTION_
+
+  echo
+fi
+
+if [ "${_OPTION_}" = "0" ]
+then
+  exit
+fi
+
+ant "build_${_OPTION_}"
+
+if [ "${?}" != "0" ]
+then
+  exit
+fi
+
+echo
+echo "****************************"
+echo "*                          *"
+echo "* Launching OSGi container *"
+echo "*                          *"
+echo "****************************"
+echo
+
+java -jar launcher.jar bundles
+

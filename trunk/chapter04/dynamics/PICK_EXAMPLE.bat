@@ -20,7 +20,7 @@ IF NOT "%_OPTION_%"=="" GOTO CHOSEN
   ECHO.6) Correct listener
   ECHO.7) Standard tracker
   ECHO.8) Customized tracker
-  ECHO.9) Exit
+  ECHO.0) exit
   ECHO.
 
   SET _OPTION_=
@@ -31,7 +31,7 @@ IF NOT "%_OPTION_%"=="" GOTO CHOSEN
 
 :CHOSEN
 
-IF "%_OPTION_%"=="9" GOTO FIN
+IF "%_OPTION_%"=="0" GOTO FIN
 
 CALL ant "build_%_OPTION_%"
 

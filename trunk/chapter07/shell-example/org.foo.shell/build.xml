@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<project name="remote_shell_ch7" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="local.dist" depends="common.local.dist,launcher">
+    <copy todir="META-INF/deps">
+      <fileset dir="${lib}" includes="org.apache.felix.dependencymanager*.jar"/>
+      <fileset dir="${lib}" includes="org.apache.felix.bundlerepository*.jar"/>
+      <fileset dir="${lib}" includes="org.apache.felix.deploymentadmin*.jar"/>
+    </copy>
+    <copy todir="${dist}">
+      <fileset dir="${lib}" includes="org.apache.felix.dependencymanager*.jar"/>
+      <fileset dir="${lib}" includes="org.apache.felix.bundlerepository*.jar"/>
+      <fileset dir="${lib}" includes="org.apache.felix.deploymentadmin*.jar"/>
+    </copy>
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+  </target>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete file="${example.dir}/launcher.jar"/>
+  </target>
+
+</project>

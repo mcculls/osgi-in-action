@@ -19,7 +19,7 @@ To see a menu of the different examples, use the "PICK_EXAMPLE" script:
   6) Correct listener
   7) Standard tracker
   8) Customized tracker
-  9) Exit
+  0) exit
 
   Choose an example (1-8):
 

@@ -43,7 +43,7 @@ public class Activator implements BundleActivator {
 
   private int getPort(BundleContext context) {
     String portProperty = context.getProperty("org.foo.shell.port");
-    int port = 8080;
+    int port = 7070;
     if (portProperty != null) {
       port = Integer.parseInt(portProperty);
     }
@@ -104,8 +104,8 @@ public class Activator implements BundleActivator {
       "bundlelevel [-i] [<level>] <id> - Get or set (initial) bundle startlevel."));
     commands.put("refresh", new RefreshCommand().setContext(context).setHelp("refresh [<id> ...] - refresh bundles."));
     commands.put("resolve", new ResolveCommand().setContext(context).setHelp("resolve [<id> ...] - resolve bundles."));
-    commands.put("ps", new PsCommand().setContext(context).setHelp(
-      "ps - Print information about the currently installed bundles"));
+    commands.put("bundles", new BundlesCommand().setContext(context).setHelp(
+      "bundles - Print information about the currently installed bundles"));
 
     HistoryDecorator command = new HistoryDecorator(new ExecuteCommand(commands), readHistory(context));
     context.addFrameworkListener(command);

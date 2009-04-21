@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<project name="memory.leaks" default="dist">
+
+  <property name="version" value="1.0"/>
+
+  <dirname property="example.dir" file="${ant.file.memory.leaks}"/>
+  <property file="${example.dir}/build.properties"/>
+  <import file="${example.dir}/../build.xml"/>
+
+</project>

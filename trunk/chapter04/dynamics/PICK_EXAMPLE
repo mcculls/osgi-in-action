@@ -20,7 +20,7 @@ then
   echo "6) Correct listener"
   echo "7) Standard tracker"
   echo "8) Customized tracker"
-  echo "9) Exit"
+  echo "0) exit"
   echo
 
   read -p "Choose an example (1-8): " _OPTION_
@@ -28,7 +28,7 @@ then
   echo
 fi
 
-if [ "${_OPTION_}" = "9" ]
+if [ "${_OPTION_}" = "0" ]
 then
   exit
 fi

@@ -11,6 +11,10 @@
     <copy file="${launcher.jar}" todir="${example.dir}"/>
   </target>
 
+  <target name="local.pde" depends="common.local.pde">
+    <unjar src="${-output}" dest="META-INF/embedded"/>
+  </target>
+
   <target name="local.clean" depends="common.local.clean">
     <delete file="${example.dir}/launcher.jar"/>
   </target>

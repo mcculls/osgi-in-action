@@ -83,6 +83,10 @@ public class ShapeTracker extends BundleTracker {
    * @param bundle The bundle of the corresponding extension.
    **/
   private void processBundleOnEventThread(int action, Bundle bundle) {
+    if ((m_context.getBundle(0).getState() & (Bundle.STARTING | Bundle.ACTIVE)) == 0) {
+      return;
+    }
+
     try {
       if (SwingUtilities.isEventDispatchThread()) {
         processBundle(action, bundle);

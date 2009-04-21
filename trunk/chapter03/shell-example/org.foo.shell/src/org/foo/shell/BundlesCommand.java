@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.Constants;
 
-public class PsCommand extends BasicCommand {
+public class BundlesCommand extends BasicCommand {
   public void exec(String args, PrintStream out, PrintStream err) throws Exception {
     Bundle[] bundles = m_context.getBundles();
 
@@ -48,7 +48,7 @@ public class PsCommand extends BasicCommand {
     out.print("] ");
     out.println(name);
     out.println("                   Location: " + location);
-    out.println("                   Symbolic-Name: " + symbolicName);
+    out.println("                   Symbolic Name: " + symbolicName);
   }
 
 }

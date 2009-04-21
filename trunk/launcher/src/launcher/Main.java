@@ -70,10 +70,10 @@ public class Main {
 
     // Record any bundle with a Main-Class.
     final List installedList = new ArrayList();
+    Bundle mainBundle = null;
 
     // Create and start an OSGi framework instance, install
     // all bundle JAR files into it, and then start all bundles.
-    Bundle mainBundle = null;
     try {
       // Configure and start the OSGi framework.
       final Map configMap = new HashMap();

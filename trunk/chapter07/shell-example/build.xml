@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project name="shell" default="dist">
+
+  <property name="version" value="2.0"/>
+
+  <dirname property="example.dir" file="${ant.file.shell}"/>
+  <property file="${example.dir}/build.properties"/>
+  <import file="${example.dir}/../build.xml"/>
+
+<target name="local.dist" depends="common.local.dist,launcher">
+    <copy todir="${dist}">
+      <fileset dir="${lib}" includes="osgi.obr.jar"/>
+      <fileset dir="${lib}" includes="osgi.cmpn.jar"/>
+      <fileset dir="${lib}" includes="org.apache.felix.dependencymanager*.jar"/>
+      <fileset dir="${lib}" includes="org.apache.felix.bundlerepository*.jar"/>
+      <fileset dir="${lib}" includes="org.apache.felix.deploymentadmin*.jar"/>
+      <fileset dir="${lib}" includes="org.apache.felix.configadmin-1.0.5-SNAPSHOT.jar"/> 
+      <fileset dir="${lib}" includes="org.apache.felix.metatype-1.0.3-SNAPSHOT.jar"/>
+    </copy>
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<project name="classloading.tips" default="dist">
+
+  <property name="version" value="1.0"/>
+
+  <dirname property="example.dir" file="${ant.file.classloading.tips}"/>
+  <property file="${example.dir}/build.properties"/>
+  <import file="${example.dir}/../build.xml"/>
+
+  <macrodef name="launch">
+    <attribute name="target"/>
+    <sequential>
+      <delete dir="${example.dir}/bundles"/>
+      <ant dir="${example.dir}/@{target}" inheritAll="false"/>
+      <ant dir="${example.dir}/org.foo.loader" inheritAll="false"/>
+      <ant dir="${example.dir}/org.foo.loader.test" inheritAll="false"/>
+    </sequential>
+  </macrodef>
+
+  <target name="api">
+    <ant dir="${example.dir}/org.foo.loader" inheritAll="false"/>
+  </target>
+
+  <target name="build_1">
+    <launch target="class_not_found"/>
+  </target>
+
+  <target name="build_2">
+    <launch target="no_class_def_found"/>
+  </target>
+
+  <target name="build_3">
+    <launch target="class_cast_issues"/>
+  </target>
+
+  <target name="build_4">
+    <launch target="for_name_issues"/>
+  </target>
+
+  <target name="build_5">
+    <launch target="tccl_issues"/>
+  </target>
+
+</project>

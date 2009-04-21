@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.0.0"> 
+  <OCD name="EchoServer" id="4.7.1.1" description="Echo Server Configuration"> 
+    <AD name="port" id="4.7.1.1.1" type="Integer" description="The port the Echo Server listens on"/> 
+  </OCD> 
+ <Designate pid="org.foo.managed.service"> 
+  <Object ocdref="4.7.1.1"/> 
+ </Designate> 
+</MetaData>

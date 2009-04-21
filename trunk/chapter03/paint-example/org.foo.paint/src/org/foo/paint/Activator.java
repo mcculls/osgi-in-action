@@ -64,8 +64,13 @@ public class Activator implements BundleActivator, Runnable {
    **/
   public void stop(BundleContext context) {
     m_shapetracker.close();
-    m_frame.setVisible(false);
-    m_frame.dispose();
+    final PaintFrame frame = m_frame;
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
+        frame.setVisible(false);
+        frame.dispose();
+      }
+    });
   }
 
   /**
