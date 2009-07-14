@@ -1,10 +1,7 @@
 package org.foo.managed.factory;
 
 import java.io.IOException;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.*;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 

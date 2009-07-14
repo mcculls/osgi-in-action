@@ -13,4 +13,9 @@
     </copy>
     <copy file="${launcher.jar}" todir="${example.dir}"/>
   </target>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete file="${example.dir}/launcher.jar"/>
+  </target>
+
 </project>

@@ -11,14 +11,14 @@
     <attribute name="target"/>
     <sequential>
       <delete dir="${example.dir}/bundles"/>
+      <ant dir="${example.dir}/org.foo.hub.extender" inheritAll="false"/>
+      <ant dir="${example.dir}/org.foo.hub.test" inheritAll="false"/>
       <ant dir="${example.dir}/@{target}" inheritAll="false"/>
-      <ant dir="${example.dir}/org.foo.loader" inheritAll="false"/>
-      <ant dir="${example.dir}/org.foo.loader.test" inheritAll="false"/>
     </sequential>
   </macrodef>
 
   <target name="api">
-    <ant dir="${example.dir}/org.foo.loader" inheritAll="false"/>
+    <ant dir="${example.dir}/org.foo.hub" inheritAll="false"/>
   </target>
 
   <target name="build_1">
@@ -34,10 +34,18 @@
   </target>
 
   <target name="build_4">
-    <launch target="for_name_issues"/>
+    <launch target="no_uses_constraints"/>
   </target>
 
   <target name="build_5">
+    <launch target="mismatched_uses"/>
+  </target>
+
+  <target name="build_6">
+    <launch target="for_name_issues"/>
+  </target>
+
+  <target name="build_7">
     <launch target="tccl_issues"/>
   </target>
 

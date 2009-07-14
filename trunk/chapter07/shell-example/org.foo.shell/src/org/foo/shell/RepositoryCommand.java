@@ -3,9 +3,7 @@ package org.foo.shell;
 import java.io.PrintStream;
 import java.net.URL;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.obr.Repository;
-import org.osgi.service.obr.RepositoryAdmin;
-import org.osgi.service.obr.Resource;
+import org.osgi.service.obr.*;
 
 public class RepositoryCommand extends BasicCommand {
 

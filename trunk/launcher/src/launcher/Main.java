@@ -94,7 +94,9 @@ public class Main {
       // Start all installed bundles.
       for (int i = 0; i < installedList.size(); i++) {
         try {
-          ((Bundle) installedList.get(i)).start();
+          if (!isFragment((Bundle) installedList.get(i))) {
+            ((Bundle) installedList.get(i)).start();
+          }
         } catch (BundleException ex) {
           System.err.println("Error starting bundle: " + ex);
           ex.printStackTrace();
@@ -125,5 +127,9 @@ public class Main {
       m_framework.waitForStop(0);
       System.exit(0);
     }
+  }
+
+  public static boolean isFragment(Bundle bundle) {
+    return bundle.getHeaders().get(Constants.FRAGMENT_HOST) != null;
   }
 }

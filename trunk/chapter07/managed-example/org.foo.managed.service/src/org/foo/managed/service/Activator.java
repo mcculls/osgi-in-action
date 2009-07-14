@@ -1,7 +1,6 @@
 package org.foo.managed.service;
 
 import java.util.Properties;
-
 import org.osgi.framework.*;
 import org.osgi.service.cm.ManagedService;
 

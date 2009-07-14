@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="debugging.bundles" default="dist">
 
-  <property name="version" value="5.0"/>
+  <property name="version" value="9.0"/>
 
   <dirname property="example.dir" file="${ant.file.debugging.bundles}"/>
   <property file="${example.dir}/build.properties"/>

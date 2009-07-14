@@ -99,6 +99,7 @@ public class PaintFrame extends JFrame implements MouseListener, MouseMotionList
     m_shapes.put(name, new ShapeInfo(name, icon, shape));
     JButton button = new JButton(icon);
     button.setActionCommand(name);
+    button.setToolTipText(name);
     button.addActionListener(m_reusableActionListener);
 
     if (m_selected == null) {

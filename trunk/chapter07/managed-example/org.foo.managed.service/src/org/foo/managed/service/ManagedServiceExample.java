@@ -2,7 +2,6 @@ package org.foo.managed.service;
 
 import java.io.IOException;
 import java.util.Dictionary;
-
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 

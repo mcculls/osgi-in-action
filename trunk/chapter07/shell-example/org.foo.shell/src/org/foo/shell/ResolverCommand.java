@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.obr.RepositoryAdmin;
-import org.osgi.service.obr.Requirement;
-import org.osgi.service.obr.Resolver;
-import org.osgi.service.obr.Resource;
+import org.osgi.service.obr.*;
 
 public class ResolverCommand extends BasicCommand {
 

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<project name="jEdit.example" default="dist">
+
+  <property name="version" value="1.0"/>
+
+  <dirname property="example.dir" file="${ant.file.jEdit.example}"/>
+  <property file="${example.dir}/build.properties"/>
+  <import file="${example.dir}/../build.xml"/>
+
+  <target name="jEdit.check">
+    <available file="${jEdit}" property="jEdit.exists"/>
+  </target>
+
+  <target name="jEdit.unpack" depends="jEdit.check" unless="jEdit.exists">
+
+    <!-- unpack vanilla jEdit 4.2 distribution -->
+    <untar src="${pkg}/jedit42source.tar.gz" compression="gzip" dest="${example.dir}"/>
+
+    <!-- fix compilation on Java6 -->
+    <replace file="${jEdit}/org/gjt/sp/jedit/GUIUtilities.java"
+             token=" SplashScreen" value=" org.gjt.sp.jedit.gui.SplashScreen"/>
+
+    <!-- create temporary API ToC -->
+    <mkdir dir="${jEdit}/doc/api"/>
+    <echo file="${jEdit}/doc/api/toc.xml" message="&lt;TOC/&gt;"/>
+
+    <!-- apply OSGi changes -->
+    <copy todir="${jEdit}">
+      <fileset dir="patch"/>
+    </copy>
+
+  </target>
+
+  <target name="dist" depends="common.local.dist,launcher,jEdit.unpack">
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+    <ant dir="${jEdit}"/>
+  </target>
+
+  <target name="wipe" depends="common.local.wipe">
+    <delete file="${example.dir}/launcher.jar"/>
+    <delete dir="${jEdit}"/>
+  </target>
+
+  <target name="pde"/>
+
+</project>

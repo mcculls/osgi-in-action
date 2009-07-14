@@ -18,9 +18,7 @@
  */
 package org.foo.shape;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.*;
 
 /**
  * This interface defines the <tt>SimpleShape</tt> service. This service is used
