@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<project name="org.foo.leaky" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="common.compile">
+    <buildnumber file="${example.dir}/build.number"/>
+    <touch file="${build}/org/foo/leaky/Activator.class"/>
+  </target>
+
+  <target name="local.dist" depends="common.local.dist,launcher,shell">
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+    <copy todir="${dist}">
+      <path refid="shell.tty"/>
+    </copy>
+  </target>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete file="${example.dir}/launcher.jar"/>
+    <delete file="${example.dir}/build.number"/>
+  </target>
+
+</project>

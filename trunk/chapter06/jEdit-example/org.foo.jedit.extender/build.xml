@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<project name="org.foo.jedit.extender" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="jEdit.unpack" if="jEdit.patched">
+    <antcall target="common.compile" inheritRefs="true"/>
+  </target>
+
+  <target name="local.dist" depends="compile,launcher,shell" if="jEdit.patched">
+    <bnd files="build.properties" classpath="${build}"/>
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+    <copy todir="${dist}">
+      <path refid="shell.tty"/>
+    </copy>
+  </target>
+
+  <target name="local.clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}" includes="build/**,*.jar"/>
+    <delete dir="${example.dir}/felix-cache"/>
+    <delete file="${example.dir}/launcher.jar"/>
+  </target>
+
+  <target name="local.wipe" depends="common.local.wipe"/>
+
+</project>

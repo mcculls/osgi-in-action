@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='utf-8'?>
+<?xml-stylesheet type='text/xsl' href='http://www2.osgi.org/www/obr2html.xsl'?>
+
+<repository lastmodified='20090323041807.316' name='Paint'>
+  <resource id='org.foo.paint/4.0.0' presentationname='paint' symbolicname='org.foo.paint' uri='paint-bundles/paint-4.0.jar' version='4.0.0'>
+    <size>
+      16941
+    </size>
+    <license>
+      http://www.apache.org/licenses/LICENSE-2.0
+    </license>
+    <documentation>
+      http://code.google.com/p/osgi-in-action/
+    </documentation>
+    <capability name='bundle'>
+      <p n='manifestversion' v='2'/>
+      <p n='presentationname' v='paint'/>
+      <p n='symbolicname' v='org.foo.paint'/>
+      <p n='version' t='version' v='4.0.0'/>
+    </capability>
+    <require extend='false' filter='(&amp;(package=javax.swing)(version&gt;=0.0.0))' multiple='false' name='package' optional='false'>
+      Import package javax.swing
+    </require>
+    <require extend='false' filter='(&amp;(package=org.foo.shape)(version&gt;=4.0.0)(version&lt;5.0.0))' multiple='false' name='package' optional='false'>
+      Import package org.foo.shape ;version=[4.0.0,5.0.0)
+    </require>
+    <require extend='false' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.3.0)(version&lt;2.0.0))' multiple='false' name='package' optional='false'>
+      Import package org.osgi.framework ;version=[1.3.0,2.0.0)
+    </require>
+    <require extend='false' filter='(&amp;(package=org.osgi.util.tracker)(version&gt;=1.3.0)(version&lt;2.0.0))' multiple='false' name='package' optional='false'>
+      Import package org.osgi.util.tracker ;version=[1.3.0,2.0.0)
+    </require>
+  </resource>
+  <resource id='org.foo.shape/4.0.0' presentationname='shape' symbolicname='org.foo.shape' uri='paint-bundles/shape-4.0.jar' version='4.0.0'>
+    <size>
+      5740
+    </size>
+    <license>
+      http://www.apache.org/licenses/LICENSE-2.0
+    </license>
+    <documentation>
+      http://code.google.com/p/osgi-in-action/
+    </documentation>
+    <capability name='bundle'>
+      <p n='manifestversion' v='2'/>
+      <p n='presentationname' v='shape'/>
+      <p n='symbolicname' v='org.foo.shape'/>
+      <p n='version' t='version' v='4.0.0'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='org.foo.shape'/>
+      <p n='version' t='version' v='4.0.0'/>
+    </capability>
+    <require extend='false' filter='(&amp;(package=org.foo.shape)(version&gt;=4.0.0)(version&lt;5.0.0))' multiple='false' name='package' optional='false'>
+      Import package org.foo.shape ;version=[4.0.0,5.0.0)
+    </require>
+  </resource>
+  <resource id='org.foo.shape.circle/4.0.0' presentationname='circle' symbolicname='org.foo.shape.circle' uri='paint-bundles/circle-4.0.jar' version='4.0.0'>
+    <size>
+      9411
+    </size>
+    <license>
+      http://www.apache.org/licenses/LICENSE-2.0
+    </license>
+    <documentation>
+      http://code.google.com/p/osgi-in-action/
+    </documentation>
+    <capability name='bundle'>
+      <p n='manifestversion' v='2'/>
+      <p n='presentationname' v='circle'/>
+      <p n='symbolicname' v='org.foo.shape.circle'/>
+      <p n='version' t='version' v='4.0.0'/>
+    </capability>
+    <require extend='false' filter='(&amp;(package=javax.swing)(version&gt;=0.0.0))' multiple='false' name='package' optional='false'>
+      Import package javax.swing
+    </require>
+    <require extend='false' filter='(&amp;(package=org.foo.shape)(version&gt;=4.0.0)(version&lt;5.0.0))' multiple='false' name='package' optional='false'>
+      Import package org.foo.shape ;version=[4.0.0,5.0.0)
+    </require>
+    <require extend='false' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.3.0)(version&lt;2.0.0))' multiple='false' name='package' optional='false'>
+      Import package org.osgi.framework ;version=[1.3.0,2.0.0)
+    </require>
+  </resource>
+  <resource id='org.foo.shape.square/4.0.0' presentationname='square' symbolicname='org.foo.shape.square' uri='paint-bundles/square-4.0.jar' version='4.0.0'>
+    <size>
+      8060
+    </size>
+    <license>
+      http://www.apache.org/licenses/LICENSE-2.0
+    </license>
+    <documentation>
+      http://code.google.com/p/osgi-in-action/
+    </documentation>
+    <capability name='bundle'>
+      <p n='manifestversion' v='2'/>
+      <p n='presentationname' v='square'/>
+      <p n='symbolicname' v='org.foo.shape.square'/>
+      <p n='version' t='version' v='4.0.0'/>
+    </capability>
+    <require extend='false' filter='(&amp;(package=javax.swing)(version&gt;=0.0.0))' multiple='false' name='package' optional='false'>
+      Import package javax.swing
+    </require>
+    <require extend='false' filter='(&amp;(package=org.foo.shape)(version&gt;=4.0.0)(version&lt;5.0.0))' multiple='false' name='package' optional='false'>
+      Import package org.foo.shape ;version=[4.0.0,5.0.0)
+    </require>
+    <require extend='false' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.3.0)(version&lt;2.0.0))' multiple='false' name='package' optional='false'>
+      Import package org.osgi.framework ;version=[1.3.0,2.0.0)
+    </require>
+  </resource>
+  <resource id='org.foo.shape.triangle/4.0.0' presentationname='triangle' symbolicname='org.foo.shape.triangle' uri='paint-bundles/triangle-4.0.jar' version='4.0.0'>
+    <size>
+      9323
+    </size>
+    <license>
+      http://www.apache.org/licenses/LICENSE-2.0
+    </license>
+    <documentation>
+      http://code.google.com/p/osgi-in-action/
+    </documentation>
+    <capability name='bundle'>
+      <p n='manifestversion' v='2'/>
+      <p n='presentationname' v='triangle'/>
+      <p n='symbolicname' v='org.foo.shape.triangle'/>
+      <p n='version' t='version' v='4.0.0'/>
+    </capability>
+    <require extend='false' filter='(&amp;(package=javax.swing)(version&gt;=0.0.0))' multiple='false' name='package' optional='false'>
+      Import package javax.swing
+    </require>
+    <require extend='false' filter='(&amp;(package=org.foo.shape)(version&gt;=4.0.0)(version&lt;5.0.0))' multiple='false' name='package' optional='false'>
+      Import package org.foo.shape ;version=[4.0.0,5.0.0)
+    </require>
+    <require extend='false' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.3.0)(version&lt;2.0.0))' multiple='false' name='package' optional='false'>
+      Import package org.osgi.framework ;version=[1.3.0,2.0.0)
+    </require>
+  </resource>
+</repository>

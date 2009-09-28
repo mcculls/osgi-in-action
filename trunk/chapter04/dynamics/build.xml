@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<project name="dynamics.example" default="dist">
+
+  <property name="Bundle-SymbolicName" value="${module}.${ant.project.name}"/>
+
+  <property name="version" value="1.0"/>
+  <dirname property="example.dir" file="${ant.file.dynamics.example}"/>
+  <import file="../build.xml"/>
+
+  <macrodef name="launch">
+    <attribute name="target"/>
+    <sequential>
+      <delete dir="${example.dir}/bundles"/>
+      <ant dir="${example.dir}/@{target}" inheritAll="false"/>
+      <ant dir="${example.dir}/org.foo.log.service" inheritAll="false"/>
+    </sequential>
+  </macrodef>
+
+  <target name="build_1">
+    <launch target="broken_lookup_field"/>
+  </target>
+
+  <target name="build_2">
+    <launch target="broken_lookup_single"/>
+  </target>
+
+  <target name="build_3">
+    <launch target="broken_lookup_race"/>
+  </target>
+
+  <target name="build_4">
+    <launch target="correct_lookup"/>
+  </target>
+
+  <target name="build_5">
+    <launch target="broken_listener"/>
+  </target>
+
+  <target name="build_6">
+    <launch target="correct_listener"/>
+  </target>
+
+  <target name="build_7">
+    <launch target="simple_tracker"/>
+  </target>
+
+  <target name="build_8">
+    <launch target="custom_tracker"/>
+  </target>
+
+</project>

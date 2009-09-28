@@ -1,0 +1,15 @@
+
+-output: jedit-engine.jar
+
+Bundle-Name: jEdit Engine
+Bundle-SymbolicName: org.gjt.sp.jedit.engine
+Bundle-Version: 4.2
+
+Export-Package:\
+ !org.gjt.sp.jedit,\
+ !org.gjt.sp.jedit.proto.*,\
+ org.gjt.sp.*;version="4.2"
+
+-versionpolicy: [${version;==;${@}},${version;+;${@}})
+-removeheaders: Private-Package,Tool,Bnd-LastModified
+

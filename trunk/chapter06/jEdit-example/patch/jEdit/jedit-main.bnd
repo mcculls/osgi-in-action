@@ -1,0 +1,24 @@
+
+-output: jedit.jar
+
+-include: org/gjt/sp/jedit/jedit.manifest
+Class-Path: jedit-thirdparty.jar jedit-engine.jar
+
+Bundle-Name: jEdit
+Bundle-SymbolicName: org.gjt.sp.jedit
+Bundle-Version: 4.2
+
+Export-Package:\
+ org.gjt.sp.jedit;version="4.2"
+
+Private-Package:\
+ org.gjt.sp.jedit.proto.*
+
+# ...see section 6.2.4...
+# DynamicImport-Package: *
+
+-versionpolicy: [${version;==;${@}},${version;+;${@}})
+-removeheaders: Private-Package,Tool,Bnd-LastModified
+
+Bundle-Activator: org.gjt.sp.jedit.Activator
+

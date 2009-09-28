@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<project name="greeting.example" default="dist">
+  <import file="../build.xml"/>
+  <property name="build.cp" value="${felix.jar}"/>
+</project>

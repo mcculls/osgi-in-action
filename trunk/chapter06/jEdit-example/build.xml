@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<project name="jEdit.example" default="dist">
+
+  <dirname property="example.dir" file="${ant.file.jEdit.example}"/>
+  <property name="jEdit" value="${example.dir}/jEdit"/>
+  <property name="dist" value="${jEdit}"/>
+  <import file="../build.xml"/>
+
+  <target name="jEdit.check">
+    <available file="${jEdit}" property="jEdit.exists"/>
+    <available file="${jEdit}/jedit-mega.bnd" property="jEdit.patched"/>
+  </target>
+
+  <target name="jEdit.unpack" depends="jEdit.check" unless="jEdit.exists">
+
+    <!-- unpack vanilla jEdit 4.2 distribution -->
+    <untar src="${example.dir}/patch/jedit42source.tar.gz" compression="gzip" dest="${example.dir}"/>
+
+    <!-- fix compilation on Java6 -->
+    <replace file="${jEdit}/org/gjt/sp/jedit/GUIUtilities.java"
+             token=" SplashScreen" value=" org.gjt.sp.jedit.gui.SplashScreen"/>
+
+    <!-- non-root build directory -->
+    <replace file="${jEdit}/build.properties"
+             token="build.directory=." value="build.directory=build"/>
+
+    <!-- create temporary API ToC -->
+    <mkdir dir="${jEdit}/doc/api"/>
+    <echo file="${jEdit}/doc/api/toc.xml" message="&lt;TOC/&gt;"/>
+    <mkdir dir="${jEdit}/build"/>
+
+  </target>
+
+  <target name="jEdit.patch" depends="jEdit.unpack" unless="jEdit.patched">
+
+    <!-- apply OSGi changes -->
+    <copy todir="${jEdit}">
+      <fileset dir="${example.dir}/patch/jEdit"/>
+    </copy>
+
+  </target>
+
+  <target name="pde" depends="dist"/>
+  <target name="local.pde" depends="local.dist"/>
+  <target name="local.clean"/>
+
+  <target name="wipe" depends="local.wipe">
+    <ant dir="org.foo.jedit.extender" target="local.wipe" inheritAll="false"/>
+  </target>
+
+</project>

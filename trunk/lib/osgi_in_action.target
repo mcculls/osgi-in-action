@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.2"?>
+
+<target name="OSGiInAction">
+
+   <targetJRE>
+      <execEnv>J2SE-1.5</execEnv>
+   </targetJRE>
+
+   <location useDefault="true"/>
+
+   <content useAllPlugins="true">
+      <plugins>
+      </plugins>
+      <features>
+      </features>
+      <extraLocations>
+         <location path="${project_loc:target.platform}/felix"/>
+      </extraLocations>
+   </content>
+
+</target>

@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<project name="common">
+
+  <dirname property="root.dir" file="${ant.file.common}"/>
+  <property file="${root.dir}/common/build.properties"/>
+
+  <available file="${src}" type="dir" property="have.source"/>
+
+  <pathconvert property="not.leaf" setonempty="false">
+    <fileset dir="." includes="*/build.xml"/>
+  </pathconvert>
+
+  <path id="shell.tty">
+    <fileset dir="${root.dir}/shell/bundles" includes="*.jar" excludes="*telnet*"/>
+  </path>
+
+  <path id="shell.telnet">
+    <fileset dir="${root.dir}/shell/bundles" includes="*.jar" excludes="*tty*"/>
+  </path>
+
+  <target name="compile" if="have.source">
+    <mkdir dir="${build}"/>
+    <mkdir dir="${dist}"/>
+    <property name="compile.level" value="1.5"/>
+    <property name="build.cp" value=""/>
+    <path id="external.classpath" path="${build.cp}">
+      <fileset dir="${lib}" includes="osgi.*.jar"/>
+    </path>
+    <javac srcdir="${src}" destdir="${build}" debug="on"
+           source="${compile.level}" target="${compile.level}">
+      <classpath>
+        <path refid="external.classpath"/>
+        <fileset dir="${dist}" includes="*.jar"/>
+      </classpath>
+    </javac>
+    <copy todir="${build}" includeEmptyDirs="false">
+      <fileset dir="${src}" excludes="**/*.java"/>
+    </copy>
+  </target>
+
+  <taskdef resource="aQute/bnd/ant/taskdef.properties" classpath="${bnd.jar}"/>
+
+  <target name="local.dist" depends="compile" if="have.source" unless="not.leaf">
+    <pathconvert pathsep="," dirsep="/" property="-classpath" refid="external.classpath"/>
+    <bnd files="build.properties" classpath="${build}"/>
+  </target>
+
+  <target name="local.pde" depends="local.dist" if="have.source" unless="not.leaf">
+    <copy file="${root.dir}/common/pde.project" tofile=".project">
+      <filterset>
+        <filter token="PROJECT" value="${chapter}.${Bundle-SymbolicName}-${version}"/>
+      </filterset>
+    </copy>
+    <copy file="${root.dir}/common/pde.classpath" tofile=".classpath">
+      <filterset>
+        <filter token="SRC" value="${src}"/>
+        <filter token="BUILD" value="${build}"/>
+      </filterset>
+    </copy>
+    <unjar src="${-output}" dest=".">
+      <patternset>
+        <include name="META-INF/MANIFEST.MF"/>
+      </patternset>
+    </unjar>
+    <mkdir dir="META-INF/embedded_content"/>
+  </target>
+
+  <target name="pde.embedded.content">
+    <unjar src="${-output}" dest="META-INF/embedded_content"/>
+    <concat destfile="META-INF/MANIFEST.MF">
+      <header file="${root.dir}/common/embedded.content.header"/>
+      <path path="META-INF/embedded_content/META-INF/MANIFEST.MF"/>
+    </concat>
+  </target>
+
+  <target name="local.clean">
+    <delete dir="felix-cache"/>
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+
+  <target name="local.wipe" depends="local.clean">
+    <delete file=".project"/>
+    <delete file=".classpath"/>
+    <delete dir="META-INF"/>
+    <delete dir="${dist}"/>
+  </target>
+
+  <target name="dist" depends="local.dist" if="not.leaf">
+    <iterate target="dist"/>
+  </target>
+
+  <target name="pde" depends="local.pde" if="not.leaf">
+    <iterate target="pde"/>
+  </target>
+
+  <target name="clean" depends="local.clean" if="not.leaf">
+    <iterate target="clean"/>
+  </target>
+
+  <target name="wipe" depends="local.wipe" if="not.leaf">
+    <iterate target="wipe"/>
+  </target>
+
+</project>

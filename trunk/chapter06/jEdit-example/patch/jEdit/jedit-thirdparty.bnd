@@ -1,0 +1,13 @@
+
+-output: jedit-thirdparty.jar
+
+Bundle-Name: jEdit Third-party Libraries
+Bundle-SymbolicName: org.gjt.sp.jedit.libs
+Bundle-Version: 4.2
+
+Export-Package: bsh, com.microstar.xml, gnu.regexp
+Private-Package: !org.gjt.sp.*, !installer.*, *
+
+-versionpolicy: [${version;==;${@}},${version;+;${@}})
+-removeheaders: Private-Package,Tool,Bnd-LastModified
+

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<project name="webapp.servletapp" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="init">
+    <copy todir="${dist}">
+      <fileset dir="${lib}/felix" includes="org.apache.felix.configadmin*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.http*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.webconsole*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.log*.jar"/>
+    </copy>
+  </target>
+
+  <target name="local.dist" depends="init, common.local.dist,launcher,shell">
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+    <copy todir="${dist}">
+      <path refid="shell.tty"/>
+    </copy>
+  </target>
+
+</project>

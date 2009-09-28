@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<project name="no_uses_constraints" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="api,common.compile"/>
+
+  <target name="local.pde"/>
+
+</project>

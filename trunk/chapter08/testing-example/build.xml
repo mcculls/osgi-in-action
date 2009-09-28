@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<project name="testing.example" default="dist">
+
+  <property name="version" value="1.0"/>
+  <dirname property="example.dir" file="${ant.file.testing.example}"/>
+  <import file="../build.xml"/>
+
+  <property name="build.cp"
+      value="${junit.jar}:
+             ${lib}/pax/pax-runner-1.1.1.jar:
+             ${lib}/pax/commons-discovery-0.4.jar:
+             ${lib}/pax/pax-exam-junit-1.1.0.jar:
+             ${lib}/pax/pax-exam-junit-extender-1.1.0.jar:
+             ${lib}/pax/pax-exam-container-default-1.1.0.jar:
+             ${lib}/pax/pax-exam-container-rbc-client-1.1.0.jar:
+             ${lib}/pax/pax-exam-container-rbc-1.1.0.jar:
+             ${lib}/pax/pax-exam-runtime-1.1.0.jar:
+             ${lib}/pax/pax-exam-spi-1.1.0.jar:
+             ${lib}/pax/pax-exam-1.1.0.jar"/>
+
+  <target name="test" depends="dist">
+    <mkdir dir="${example.dir}/reports"/>
+    <junit showoutput="true">
+      <classpath path="${build.cp}">
+        <fileset dir="${dist}" includes="*.jar"/>
+      </classpath>
+      <formatter type="plain"/>
+      <batchtest todir="${example.dir}/reports">
+        <zipfileset>
+          <include name="**/*Test*.class"/>
+          <exclude name="**/AllTests.class"/>
+          <fileset dir="${dist}">
+            <include name="*.jar"/>
+          </fileset>
+        </zipfileset>
+      </batchtest>
+    </junit>
+  </target>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete dir="${example.dir}/reports"/>
+  </target>
+
+  <target name="local.pde"/>
+
+</project>

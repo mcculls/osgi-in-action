@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<project name="main" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="consumer,common.compile"/>
+
+  <target name="local.dist" depends="compile">
+    <jar destfile="${example.dir}/main.jar">
+      <zipfileset src="${felix.jar}"/>
+      <fileset dir="${build}"/>
+      <manifest>
+        <attribute name="Main-Class" value="${module}.Main"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="local.pde"/>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete file="${example.dir}/main.jar"/>
+  </target>
+
+</project>

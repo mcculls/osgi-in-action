@@ -1,0 +1,15 @@
+
+-output: jedit.jar
+
+-include: org/gjt/sp/jedit/jedit.manifest
+
+Bundle-Name: jEdit
+Bundle-SymbolicName: org.gjt.sp.jedit
+Bundle-Version: 4.2
+
+Private-Package: *
+
+-removeheaders: Private-Package,Tool,Bnd-LastModified
+
+Bundle-Activator: org.gjt.sp.jedit.Activator
+

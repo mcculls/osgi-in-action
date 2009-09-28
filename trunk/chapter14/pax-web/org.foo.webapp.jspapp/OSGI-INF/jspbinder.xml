@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="sample.component" immediate="true">
+  <implementation class="org.foo.webapp.jspapp.Binder" />
+  
+  <reference name="webcontainer"
+        interface="org.ops4j.pax.web.service.WebContainer"
+        cardinality="1..1" 
+        policy="static"
+        bind="bindWebContainer"
+        unbind="unbindWebContainer"
+    />    
+</component>

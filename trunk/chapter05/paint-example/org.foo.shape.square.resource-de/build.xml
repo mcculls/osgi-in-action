@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<project name="square.resource-de" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="shape,common.compile"/>
+
+</project>
