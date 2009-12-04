@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project name="cobertura.osgi" default="dist">
+
+  <property name="module" value="cobertura"/>
+  <property name="version" value="1.9.3"/>
+
+  <import file="../build.xml"/>
+
+  <target name="unpack.cobertura">
+    <unzip overwrite="false" src="${cobertura.dir}-bin.zip" dest="."/>
+  </target>
+
+  <target name="local.dist" if="instrument">
+    <antcall target="unpack.cobertura"/>
+
+    <mkdir dir="${build}"/>
+
+    <copy file="${cobertura.dir}/cobertura.jar" todir="${build}"/>
+    <jar destfile="${build}/cobertura.jar" update="true"
+        basedir="${cobertura.dir}/lib" includes="*.jar"/>
+
+    <mkdir dir="${dist}"/>
+
+    <property name="Bundle-ClassPath"
+        value=".,asm-3.0.jar,asm-tree-3.0.jar,
+               jakarta-oro-2.0.8.jar,log4j-1.2.9.jar"/>
+
+    <bndwrap jars="${build}/cobertura.jar"
+        output="${dist}/${module}-osgi-${version}.jar"/>
+
+  </target>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete dir="${cobertura.dir}"/>
+  </target>
+
+</project>

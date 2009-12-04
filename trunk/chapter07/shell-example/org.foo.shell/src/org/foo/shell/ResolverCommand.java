@@ -16,20 +16,11 @@ public class ResolverCommand extends BasicCommand {
     if ((resources != null) && (resources.length > 0)) {
       resolver.add(resources[0]);
       if (resolver.resolve()) {
-        List<Bundle> bundles = new ArrayList<Bundle>();
         for (Resource res : resolver.getRequiredResources()) {
           out.println("Deploying dependency: " + res.getPresentationName() + 
             " (" + res.getSymbolicName() + ") " + res.getVersion());
-          bundles.add(m_context.installBundle(res.getURL().toURI().toString()));
         }
-        bundles.add(m_context.installBundle(resources[0].getURL().toURI().toString()));
-        for (Bundle bundle : bundles) {
-          try {
-            bundle.start();
-          } catch (Exception ex) {
-            ex.printStackTrace(out);
-          }
-        }
+        resolver.deploy(true);
       } else {
         out.println("Can not resolve " + resources[0].getId() + " reason: ");
         for (Requirement req : resolver.getUnsatisfiedRequirements()) {

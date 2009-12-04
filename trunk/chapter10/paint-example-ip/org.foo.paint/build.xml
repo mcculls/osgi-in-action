@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project name="paint" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="shape,common.compile"/>
+
+  <target name="init">
+    <copy todir="${dist}">
+      <fileset dir="${example.dir}/../paint-example-common/bundles" includes="*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.ipojo-*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.ipojo.annotations-*.jar"/>
+    </copy>
+  </target>
+
+  <target name="local.dist" depends="shape, init, common.local.dist,launcher,shell">
+    <taskdef name="ipojo"
+      classname="org.apache.felix.ipojo.task.IPojoTask"
+      classpath="${lib}/felix/org.apache.felix.ipojo.ant-1.4.0.jar" />
+    <ipojo
+      input="${dist}/${ant.project.name}-${version}.jar"
+      metadata = "OSGI-INF/paint.xml"
+     />
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+    <copy todir="${dist}">
+      <path refid="shell.tty"/>
+    </copy>
+  </target>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete file="${example.dir}/launcher.jar"/>
+  </target>
+
+</project>

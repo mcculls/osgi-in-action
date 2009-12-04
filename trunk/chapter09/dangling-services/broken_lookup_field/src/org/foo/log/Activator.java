@@ -30,8 +30,7 @@ import org.osgi.service.log.LogService;
  **/
 public class Activator implements BundleActivator {
 
-  // this field is used to communicate between the bundle and test thread, so must be volatile
-  volatile LogService m_logService;
+  LogService m_logService;
 
   /**
    * START LOG TEST
@@ -53,9 +52,6 @@ public class Activator implements BundleActivator {
    **/
   public void stop(BundleContext context) {
 
-    // clear field when we're done with the LogService, also tells the test thread to finish
-    m_logService = null;
-
     stopTestThread();
   }
 
@@ -63,7 +59,7 @@ public class Activator implements BundleActivator {
   class LogServiceTest implements Runnable {
     public void run() {
 
-      while (m_logService != null) {
+      while (Thread.currentThread() == m_logTestThread) {
         m_logService.log(LogService.LOG_INFO, "ping");
         pauseTestThread();
       }
@@ -74,7 +70,7 @@ public class Activator implements BundleActivator {
   //  The rest of this is just support code, not meant to show any particular best practices
   //------------------------------------------------------------------------------------------
 
-  Thread m_logTestThread;
+  volatile Thread m_logTestThread;
 
   void startTestThread() {
     // start separate worker thread to run the actual tests, managed by the bundle lifecycle
@@ -85,8 +81,12 @@ public class Activator implements BundleActivator {
 
   void stopTestThread() {
     // thread should cooperatively shutdown on the next iteration, because field is now null
-    m_logTestThread.interrupt();
+    Thread testThread = m_logTestThread;
     m_logTestThread = null;
+    if (testThread != null) {
+      testThread.interrupt();
+      try {testThread.join();} catch (InterruptedException e) {}
+    }
   }
 
   void pauseTestThread() {

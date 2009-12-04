@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="junit.osgi" default="dist">
+
+  <property name="module" value="junit"/>
+  <property name="version" value="4.7"/>
+
+  <import file="../build.xml"/>
+
+  <target name="local.dist">
+    <mkdir dir="${dist}"/>
+
+    <property name="Main-Class" value="junit.textui.TestRunner"/>
+    <property name="DynamicImport-Package" value="*"/>
+
+    <bndwrap jars="${lib}/${module}-${version}.jar"
+        output="${dist}/${module}-osgi-${version}.jar"/>
+
+  </target>
+
+</project>

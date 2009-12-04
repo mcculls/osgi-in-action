@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project name="webservice.example" default="dist">
+
+  <property name="version" value="1.0"/>
+
+  <dirname property="example.dir" file="${ant.file.webservice.example}"/>
+  <property file="${example.dir}/build.properties"/>
+  <import file="${example.dir}/../build.xml"/>
+
+  <target name="api">
+    <ant dir="${example.dir}/org.foo.webservice" inheritAll="false"/>
+  </target>
+
+  <target name="impl">
+    <ant dir="${example.dir}/org.foo.webservice.impl" inheritAll="false"/>
+  </target>
+
+  <target name="helper">
+    <ant dir="${example.dir}/org.foo.webservice.helper" inheritAll="false"/>
+  </target>
+
+</project>

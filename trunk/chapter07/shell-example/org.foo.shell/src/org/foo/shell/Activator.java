@@ -106,11 +106,11 @@ public class Activator implements BundleActivator {
     commands.put("resolve", new ResolveCommand().setContext(context).setHelp("resolve [<id> ...] - resolve bundles."));
     commands.put("bundles", new BundlesCommand().setContext(context).setHelp(
       "bundles - Print information about the currently installed bundles"));
-    commands.put("obr-repository", new RepositoryCommand().setContext(context).setHelp(
+    commands.put("obr-repo", new RepositoryCommand().setContext(context).setHelp(
       "obr-repository {list-urls|add-url <url> |remove-url <url>|list}"));
     commands.put("obr-resolver", new ResolverCommand().setContext(context).setHelp("obr-resolver <resource-filter>"));
     commands.put("dpa", new DeploymentPackageCommand().setContext(context).setHelp("dpa {list|install <url>|uninstall <name>}"));
-    commands.put("cm", new ConfigAdminCommand().setContext(context).setHelp("cm {list|add <pid> [key=value ...]|add-factory <pid> [key=value]|remove-factory <pid>|remove <pid>}"));
+    commands.put("cm", new ConfigAdminCommand().setContext(context).setHelp("cm {list|add-cfg <pid> [key=value ...]|add-factory-cfg <pid> [key=value]|remove-factory-cfg <pid>|remove-cfg <pid>}"));
     commands.put("type", new MetaDataCommand().setContext(context).setHelp("type <bundle-id>"));
 
     HistoryDecorator command = new HistoryDecorator(new ExecuteCommand(commands), readHistory(context));

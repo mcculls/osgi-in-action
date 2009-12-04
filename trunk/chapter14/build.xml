@@ -1,4 +1,0 @@
-<?xml version="1.0"?>
-<project name="chapter14" default="dist">
-  <import file="../build.xml"/>
-</project>

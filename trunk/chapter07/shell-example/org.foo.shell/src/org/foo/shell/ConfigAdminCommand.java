@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -11,54 +12,59 @@ public class ConfigAdminCommand extends BasicCommand {
 
   public void exec(String args, PrintStream out, PrintStream err)
     throws Exception {
-    ConfigurationAdmin admin = getConfigurationAdmin();
-    if (admin != null) {
-      args = args.trim();
-      if (args.startsWith("list")) {
-        Configuration[] configurations = null;
-        if (args.equals("list")) {
-          configurations = admin.listConfigurations(null);
-        } else {
-          configurations = admin.listConfigurations(args.substring(
-            "list".length()).trim());
-        }
-        if (configurations != null) {
-          for (Configuration configuration : configurations) {
-            Dictionary properties = configuration.getProperties();
-            for (Enumeration e = properties.keys(); e
-              .hasMoreElements();) {
-              Object key = e.nextElement();
-              out.println(key + "=" + properties.get(key));
-            }
-          }
-        }
-      } else if (args.startsWith("add-factory")) {
-        String pid = args.substring("add-factory".length(),
-          args.indexOf(" ", "add-factory ".length())).trim();
-        Configuration conf = admin.createFactoryConfiguration(pid,
-          null);
-        createConfiguration(args.substring(
-          ("add-factory " + pid).length()).trim(), pid, conf);
-      } else if (args.startsWith("add")) {
-        String pid = args.substring("add".length(),
-          args.indexOf(" ", "add ".length())).trim();
-        Configuration conf = admin.getConfiguration(pid, null);
-        createConfiguration(args.substring(("add " + pid).length())
-          .trim(), pid, conf);
-      } else if (args.startsWith("remove-factory")) {
-        Configuration[] configurations = admin
-          .listConfigurations("(service.pid=" +
-            args.substring("remove-factory".length()).trim() + ")");
-        configurations[0].delete();
-
-      } else if (args.startsWith("remove")) {
-        String pid = args.substring("remove".length()).trim();
-        Configuration conf = admin.getConfiguration(pid);
-        conf.delete();
-      }
-    } else {
-      out.println("No ConfigurationAdmin service found!");
+    args=args.trim();
+    if (args.startsWith("list")) {
+      listConfigurations(args.substring("list".length()).trim(), out);
+    } else if (args.startsWith("add-cfg")) {
+      addConfiguration(args.substring("add-cfg".length()).trim());
+    } else if (args.startsWith("remove-cfg")) {
+      removeConfiguration(args.substring("remove-cfg".length()).trim());
+    } else if (args.startsWith("add-factory-cfg")) {
+      addFactoryConfiguration(args.substring("add-factory-cfg".length()).trim());
+    } else if (args.startsWith("remove-factory-cfg")) {
+      removeFactoryConfiguration(args.substring("remove-factory-cfg".length()).trim());
     }
+  }
+  
+  private void listConfigurations(String filter, PrintStream out) throws IOException, InvalidSyntaxException {
+    Configuration[] configurations = admin().listConfigurations(
+      ((filter.length() == 0) ? null : filter));
+    
+    if (configurations != null) {
+      for (Configuration configuration : configurations) {
+        Dictionary properties = configuration.getProperties();
+        for (Enumeration e = properties.keys(); e
+          .hasMoreElements();) {
+          Object key = e.nextElement();
+            out.println(key + "=" + properties.get(key));
+        }
+        out.println();
+      }
+    }
+  }
+  
+  private void addConfiguration(String args) throws IOException{
+    String pid = args.substring(0, args.indexOf(" ")).trim();
+    Configuration conf = admin().getConfiguration(pid, null);
+    createConfiguration(args.substring(pid.length()).trim(), pid, conf);
+  }
+  
+  private void removeConfiguration(String pid) throws IOException {
+    Configuration conf = admin().getConfiguration(pid);
+    conf.delete();
+  }
+  
+  private void addFactoryConfiguration(String args) throws IOException {
+    String pid = args.substring(0, args.indexOf(" ")).trim();
+    Configuration conf = admin().createFactoryConfiguration(pid,
+      null);
+    createConfiguration(args.substring(pid.length()).trim(), pid, conf);
+  }
+  
+  private void removeFactoryConfiguration(String pid) throws IOException, InvalidSyntaxException {
+    Configuration[] configurations = admin().listConfigurations(
+      "(service.pid=" + pid + ")");
+    configurations[0].delete();
   }
 
   private void createConfiguration(String args, String pid,
@@ -76,7 +82,7 @@ public class ConfigAdminCommand extends BasicCommand {
     conf.update(dict);
   }
 
-  private ConfigurationAdmin getConfigurationAdmin() {
+  private ConfigurationAdmin admin() {
     ServiceReference ref = m_context
       .getServiceReference(ConfigurationAdmin.class.getName());
     if (ref != null) {

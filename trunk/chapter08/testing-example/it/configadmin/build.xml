@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<project name="integration_tests" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <copy todir="${dist}">
+    <fileset dir="${lib}/pax" includes="*tinybundles*"/>
+  </copy>
+
+  <copy file="${example.dir}/lib/org.apache.felix.configadmin-1.0.0.jar"
+    tofile="${dist}/old.configadmin.jar"/>
+
+</project>

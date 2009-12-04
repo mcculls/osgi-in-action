@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project name="commons_pool_test" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <unzip overwrite="false" src="${example.dir}/commons-pool-${version}-src.zip" dest=".">
+    <patternset>
+      <include name="**/src/test/**"/>
+    </patternset>
+    <filtermapper>
+      <replacestring from="commons-pool-${version}-src/src/test" to="src"/>
+    </filtermapper>
+  </unzip>
+
+  <target name="local.dist" depends="common.local.dist,launcher">
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+  </target>
+
+  <target name="local.pde" depends="local.dist"/>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete file="${example.dir}/launcher.jar"/>
+    <delete dir="src/org"/>
+  </target>
+
+</project>

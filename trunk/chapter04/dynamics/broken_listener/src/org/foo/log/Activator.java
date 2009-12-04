@@ -41,16 +41,17 @@ import org.osgi.service.log.LogService;
  * 
  * If you restart the simple LogService with "stop 1" and "start 1" you should see:
  * 
- *   <22> thread="Felix Shell TUI", bundle=2 : logging ON
- *   <22> thread="LogService Tester", bundle=2 : ping
+ *   <5> thread="Thread-1", bundle=2 : logging ON
+ *   <5> thread="LogService Tester", bundle=2 : ping
  *   ...
  * 
  * Which shows that the client has received the new LogService registration event.
  **/
 public class Activator implements BundleActivator {
 
-  // these fields are used to communicate between the bundle and test thread, so must be volatile
-  volatile BundleContext m_context;
+  BundleContext m_context;
+
+  // this field is is updated by the listener and read by the test thread, so must be volatile
   volatile LogService m_logService;
 
   /**
@@ -78,10 +79,6 @@ public class Activator implements BundleActivator {
 
     // when stopping a bundle the framework automatically removes any listeners it had added,
     // but you can explicitly remove a listener with m_context.removeServiceListener(listener)
-
-    // clear fields when we're done with the LogService, also tells the test thread to finish
-    m_logService = null;
-    m_context = null;
 
     stopTestThread();
   }
@@ -111,7 +108,7 @@ public class Activator implements BundleActivator {
   class LogServiceTest implements Runnable {
     public void run() {
 
-      while (m_context != null) {
+      while (Thread.currentThread() == m_logTestThread) {
 
         // if the service instance is null then we know there is no LogService available
         if (m_logService != null) {
@@ -129,7 +126,7 @@ public class Activator implements BundleActivator {
   //  The rest of this is just support code, not meant to show any particular best practices
   //------------------------------------------------------------------------------------------
 
-  Thread m_logTestThread;
+  volatile Thread m_logTestThread;
 
   void startTestThread() {
     // start separate worker thread to run the actual tests, managed by the bundle lifecycle
@@ -140,11 +137,15 @@ public class Activator implements BundleActivator {
 
   void stopTestThread() {
     // thread should cooperatively shutdown on the next iteration, because field is now null
-    m_logTestThread.interrupt();
+    Thread testThread = m_logTestThread;
     m_logTestThread = null;
+    if (testThread != null) {
+      testThread.interrupt();
+      try {testThread.join();} catch (InterruptedException e) {}
+    }
   }
 
-  void pauseTestThread() {
+  protected void pauseTestThread() {
     try {
       // sleep for a bit
       Thread.sleep(5000);

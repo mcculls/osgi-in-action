@@ -30,7 +30,7 @@ public class Main {
 
   public static void main(String[] args) throws Exception {
     // Must specify a bundle directory.
-    if (args.length != 1 || !new File(args[0]).isDirectory()) {
+    if (args.length < 1 || !new File(args[0]).isDirectory()) {
       System.out.println("Usage: <bundle-directory>");
     } else {
       // Look in the specified bundle directory to create a list
@@ -101,7 +101,9 @@ public class Main {
               final Class mainClass = mainBundle.loadClass(mainClassName);
               try {
                 Method method = mainClass.getMethod("main", new Class[] { String[].class });
-                method.invoke(null, new Object[] { new String[0] });
+                String[] mainArgs = new String[args.length-1];
+                System.arraycopy(args, 1, mainArgs, 0, mainArgs.length);
+                method.invoke(null, new Object[] { mainArgs });
               } catch (Exception ex) {
                 System.err.println("Error invoking main method: " + ex + " cause = " + ex.getCause());
               }

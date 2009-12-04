@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="triangle" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="local.dist" depends="shape, common.local.dist,launcher,shell">
+    <taskdef name="ipojo"
+      classname="org.apache.felix.ipojo.task.IPojoTask"
+      classpath="${lib}/felix/org.apache.felix.ipojo.ant-1.4.0.jar" />
+	<ipojo
+      input="${dist}/${ant.project.name}-${version}.jar"
+      metadata = "OSGI-INF/triangle.xml"/>
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+    <copy todir="${dist}">
+      <path refid="shell.tty"/>
+    </copy>
+  </target>
+
+</project>

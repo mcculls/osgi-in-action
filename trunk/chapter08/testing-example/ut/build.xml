@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<project name="unit.tests" default="dist">
+  <import file="../build.xml"/>
+</project>

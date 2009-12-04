@@ -20,11 +20,11 @@ public class RepositoryCommand extends BasicCommand {
           admin.addRepository(new URL(args.substring("add-url".length())));
         } else if (args.startsWith("remove-url")) {
           admin.removeRepository(new URL(args.substring("remove-url".length())));
-        } else if ("list".equalsIgnoreCase(args)) {
-          for (Repository repo : admin.listRepositories()) {
-            for (Resource res : repo.getResources()) {
-              out.println(res.getPresentationName() + " (" + res.getSymbolicName() + ") " + res.getVersion());
-            }
+        } else if (args.startsWith("list")) {
+          String query = (args.equals("list"))
+            ? "(symbolicname=*)" : args.substring("list".length()).trim();
+          for (Resource res : admin.discoverResources(query)) {
+            out.println(res.getPresentationName() + " (" + res.getSymbolicName() + ") " + res.getVersion());
           }
         }
       } else {

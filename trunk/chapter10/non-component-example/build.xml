@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<project name="non-component-example" default="dist">
+  <import file="../build.xml"/>
+</project>

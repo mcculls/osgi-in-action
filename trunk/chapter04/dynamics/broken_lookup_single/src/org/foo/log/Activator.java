@@ -38,7 +38,7 @@ import org.osgi.service.log.LogService;
  * 
  * If you stop the simple LogService with "stop 1" you should see the following:
  * 
- *   <3> thread="Felix Shell TUI", bundle=2 : logging OFF
+ *   <3> thread="Thread-1", bundle=2 : logging OFF
  *   <--> thread="LogService Tester", bundle=2 : LogService has gone
  *   ...
  * 
@@ -48,16 +48,15 @@ import org.osgi.service.log.LogService;
  * only when you restart the client with "stop 2" and "start 2" that it repeats
  * the query in the start method and finds the new service:
  * 
- *   <22> thread="LogService Tester", bundle=2 : logging ON
- *   <22> thread="LogService Tester", bundle=2 : ping
+ *   <5> thread="LogService Tester", bundle=2 : logging ON
+ *   <5> thread="LogService Tester", bundle=2 : ping
  *   ...
  * 
- * Note that the new LogService has an increased "service.id" property of 22.
+ * Note that the new LogService has an increased "service.id" property of 5.
  **/
 public class Activator implements BundleActivator {
 
-  // this field is used to communicate between the bundle and test thread, so must be volatile
-  volatile ServiceReference m_logServiceRef;
+  ServiceReference m_logServiceRef;
 
   BundleContext m_context;
 
@@ -81,9 +80,6 @@ public class Activator implements BundleActivator {
    **/
   public void stop(BundleContext context) {
 
-    // clear field when we're done with the LogService, also tells the test thread to finish
-    m_logServiceRef = null;
-
     stopTestThread();
   }
 
@@ -91,7 +87,7 @@ public class Activator implements BundleActivator {
   class LogServiceTest implements Runnable {
     public void run() {
 
-      while (m_logServiceRef != null) {
+      while (Thread.currentThread() == m_logTestThread) {
 
         // we use the saved bundle context and service reference to get the real instance
         LogService logService = (LogService) m_context.getService(m_logServiceRef);
@@ -112,7 +108,7 @@ public class Activator implements BundleActivator {
   //  The rest of this is just support code, not meant to show any particular best practices
   //------------------------------------------------------------------------------------------
 
-  Thread m_logTestThread;
+  volatile Thread m_logTestThread;
 
   void startTestThread() {
     // start separate worker thread to run the actual tests, managed by the bundle lifecycle
@@ -123,11 +119,15 @@ public class Activator implements BundleActivator {
 
   void stopTestThread() {
     // thread should cooperatively shutdown on the next iteration, because field is now null
-    m_logTestThread.interrupt();
+    Thread testThread = m_logTestThread;
     m_logTestThread = null;
+    if (testThread != null) {
+      testThread.interrupt();
+      try {testThread.join();} catch (InterruptedException e) {}
+    }
   }
 
-  void pauseTestThread() {
+  protected void pauseTestThread() {
     try {
       // sleep for a bit
       Thread.sleep(5000);

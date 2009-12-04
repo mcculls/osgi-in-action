@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+  name="windowlistener">
+  <scr:implementation class="org.foo.windowlistener.WindowListener" />
+  
+  <scr:reference 
+    name="Window" 
+    interface="java.awt.Window" 
+    policy="static" 
+    cardinality="1..1" 
+    target="(name=main)" 
+    bind="bindWindow" 
+    unbind="unbindWindow"/>
+  <scr:reference 
+    name="LogService" 
+    interface="org.osgi.service.log.LogService" 
+    policy="dynamic"
+    cardinality="0..1"
+    bind="bindLog"
+    unbind="unbindLog"/> 
+</scr:component>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+  <bean id="listener" class="org.foo.windowlistener.WindowListener">
+    <property name="bundleContext" ref="blueprintBundleContext" />
+  </bean> 
+  
+  <reference id="window" interface="org.foo.windowlistener.api.Window" timeout="0"> 
+    <reference-listener 
+      bind-method="bindWindow"
+      unbind-method="unbindWindow"
+      ref="listener"/> 
+  </reference>
+  
+  <reference id="log" interface="org.osgi.service.log.LogService" availability="optional"> 
+    <reference-listener 
+      bind-method="bindLog"
+      unbind-method="unbindLog"
+      ref="listener"/> 
+  </reference>
+</blueprint>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<project name="commons_pool_main" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <unzip overwrite="false" src="${example.dir}/commons-pool-${version}-src.zip" dest=".">
+    <patternset>
+      <include name="**/src/java/**"/>
+    </patternset>
+    <filtermapper>
+      <replacestring from="commons-pool-${version}-src/src/java" to="src"/>
+    </filtermapper>
+  </unzip>
+
+  <target name="local.dist" depends="instrument,common.local.dist"/>
+
+  <target name="local.pde" depends="local.dist"/>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete dir="src/org"/>
+  </target>
+
+</project>

@@ -1,7 +1,6 @@
 package org.foo.spoke;
 
 import java.lang.reflect.Method;
-import java.util.regex.Pattern;
 import org.foo.hub.Message;
 import org.foo.hub.spi.Spoke;
 
@@ -17,7 +16,7 @@ public class SpokeImpl implements Spoke {
   }
 
   public boolean receive(Message message) {
-    if (Pattern.compile(message.getAddress()).matcher(address).matches()) {
+    if (address.matches(message.getAddress())) {
 
       Class msgClazz = message.getClass();
       String auditorName = msgClazz.getPackage().getName() + ".Auditor";
