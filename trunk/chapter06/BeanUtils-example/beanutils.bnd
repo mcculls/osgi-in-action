@@ -1,3 +1,0 @@
-Export-Package: org.apache.commons.beanutils.*
-Private-Package: org.apache.commons.collections
-Import-Package: org.apache.commons.collections.*;resolution:=optional,*
