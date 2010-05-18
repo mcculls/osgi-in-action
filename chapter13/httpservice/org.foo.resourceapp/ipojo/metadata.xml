@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iPOJO>
+  <component className="org.foo.httpservice.resourceapp.ResourceBinder" architecture="true">
+    <requires field="s_log"/> 
+    <requires> 
+      <callback type="bind" method="addHttpService"/> 
+      <callback type="unbind" method="removeHttpService"/> 
+    </requires>
+  </component>
+  
+  <instance component="org.foo.httpservice.resourceapp.ResourceBinder"/>
+</iPOJO>

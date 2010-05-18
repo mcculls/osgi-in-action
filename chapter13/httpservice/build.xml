@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<project name="httpservice.example" default="dist">
+
+  <property name="version" value="1.0"/>
+
+  <dirname property="example.dir" file="${ant.file.httpservice.example}"/>
+  <property file="${example.dir}/build.properties"/>
+  <import file="${example.dir}/../build.xml"/>
+
+</project>

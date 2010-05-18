@@ -1,0 +1,7 @@
+<web-app>
+  <taglib>
+    <taglib-uri>/mut</taglib-uri>
+    <taglib-location>/WEB-INF/mut.tld</taglib-location>
+  </taglib>
+
+</web-app>

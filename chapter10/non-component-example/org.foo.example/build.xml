@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<project name="org.foo.example" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+  <target name="local.dist" depends="common.local.dist,launcher,shell">
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+    <copy todir="${dist}">
+      <path refid="shell.tty"/>
+    </copy>
+  </target>
+</project>

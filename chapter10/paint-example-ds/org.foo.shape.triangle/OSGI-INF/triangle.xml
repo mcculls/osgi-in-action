@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+  name="triangle">
+  <property name="simple.shape.name" value="Triangle" />
+  <property name="simple.shape.icon" value="triangle.png" />
+  <scr:implementation class="org.foo.shape.triangle.Triangle" />
+  <scr:service>
+     <scr:provide interface="org.foo.shape.SimpleShape"/>
+  </scr:service>  
+</scr:component>

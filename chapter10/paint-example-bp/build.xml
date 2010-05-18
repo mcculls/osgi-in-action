@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project name="paint.example.bp" default="dist">
+
+  <property name="version" value="4.0"/>
+  <dirname property="example.dir" file="${ant.file.paint.example.bp}"/>
+  <import file="../build.xml"/>
+
+  <target name="shape">
+    <ant dir="${example.dir}/../paint-example-common/org.foo.shape" inheritAll="false"/>
+  </target>
+
+  <target name="circle">
+    <ant dir="${example.dir}/org.foo.shape.circle" inheritAll="false"/>
+  </target>
+
+  <target name="triangle">
+    <ant dir="${example.dir}/org.foo.shape.triangle" inheritAll="false"/>
+  </target>
+
+  <target name="square">
+    <ant dir="${example.dir}/org.foo.shape.square" inheritAll="false"/>
+  </target>
+
+  <target name="paint">
+    <ant dir="${example.dir}/org.foo.paint" inheritAll="false"/>
+  </target>
+
+  <target name="windowlistener">
+    <ant dir="${example.dir}/org.foo.windowlistener" inheritAll="false"/>
+  </target>
+
+</project>

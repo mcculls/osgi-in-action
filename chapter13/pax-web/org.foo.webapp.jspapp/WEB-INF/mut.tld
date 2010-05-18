@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+        "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_2.dtd">
+<taglib>
+    <tlib-version>1.1</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>mut</short-name>
+    <uri>/mut</uri>
+    <description>
+	Utility tags for JSP.
+    </description>
+
+    <validator>
+	<validator-class>com.taglib.wdjsp.mut.NestingTLV</validator-class>
+	<init-param>
+		<param-name>inner</param-name>
+		<param-value>index</param-value>
+		<description>Name of the inner tag.</description>
+	</init-param>
+	<init-param>
+		<param-name>outer</param-name>
+		<param-value>forProperty</param-value>
+		<description>Name of the outer tag.</description>
+	</init-param>
+	<description>Validates tag nesting requirements.</description>
+    </validator>
+
+    <tag>
+	<name>debugBuffer</name>
+	<tag-class>com.taglib.wdjsp.mut.DebugBufferTag</tag-class>
+	<body-content>empty</body-content>
+	<description>
+	    Report the current status of output buffering.
+	</description>
+    </tag>
+
+    <tag>
+	<name>debugCookies</name>
+	<tag-class>com.taglib.wdjsp.mut.DebugCookiesTag</tag-class>
+	<body-content>empty</body-content>
+	<description>
+	    List the cookies accessible from this page.
+	</description>
+	<attribute><name>style</name></attribute>
+    </tag>
+
+    <tag>
+	<name>url</name>
+	<tag-class>com.taglib.wdjsp.mut.UrlTag</tag-class>
+	<body-content>tagdependent</body-content>
+	<description>
+	    Perform URL rewriting if required.
+	</description>
+    </tag>
+
+    <tag>
+	<name>encodeHTML</name>
+	<tag-class>com.taglib.wdjsp.mut.EncodeHtmlTag</tag-class>
+	<body-content>tagdependent</body-content>
+	<description>
+	    Perform HTML encoding of enclosed text.
+	</description>
+    </tag>
+
+    <tag>
+	<name>ifProperty</name>
+	<tag-class>com.taglib.wdjsp.mut.IfPropertyTag</tag-class>
+	<body-content>JSP</body-content>
+	<description>
+	    Conditionally include or exclude page content
+	    based on a bean property.
+	</description>
+	<attribute><name>name</name><required>true</required></attribute>
+	<attribute><name>property</name><required>true</required></attribute>
+	<attribute><name>action</name></attribute>
+    </tag>
+
+    <tag>
+	<name>forProperty</name>
+	<tag-class>com.taglib.wdjsp.mut.ForPropertyTag</tag-class>
+	<tei-class>com.taglib.wdjsp.mut.ForPropertyTEI</tei-class>
+	<body-content>JSP</body-content>
+	<description>
+	    Loop through an indexed property.
+	</description>
+	<attribute><name>name</name><required>true</required></attribute>
+	<attribute><name>property</name><required>true</required></attribute>
+	<attribute><name>id</name><required>true</required></attribute>
+	<attribute><name>class</name><required>true</required></attribute>
+	<example><![CDATA[
+		Let's iterate! For your "flynn" bean try...
+		<forProperty name="flynn" property="program"
+			     id="prog" class="com.encom.Program">
+			body content
+		</forProperty>
+		Cool, eh?
+	]]></example>
+    </tag>
+    
+    <tag>
+	<name>index</name>
+	<tag-class>com.taglib.wdjsp.mut.IndexTag</tag-class>
+	<body-content>empty</body-content>
+	<description>
+	    Prints the index for the current iteration.
+	</description>
+	<attribute>
+	    <name>start</name>
+	    <required>false</required>
+	    <rtexprvalue>true</rtexprvalue>
+	</attribute>
+    </tag>
+
+    <tag>
+	<name>timeOfDay</name>
+	<tag-class>com.taglib.wdjsp.mut.TimeOfDayTag</tag-class>
+	<body-content>empty</body-content>
+	<description>
+	    Sets a scripting variable to the current time of day.
+	</description>
+	<variable>
+	    <name-from-attribute>id</name-from-attribute>
+	    <variable-class>
+		com.taglib.wdjsp.mut.TimeOfDayBean
+	    </variable-class>
+	    <declare>true</declare>
+	    <scope>AT_BEGIN</scope>
+	</variable>
+	<attribute><name>id</name><required>true</required></attribute>
+	<attribute>
+	    <name>timezone</name>
+	    <required>false</required>
+	    <rtexprvalue>true</rtexprvalue>
+	</attribute>
+    </tag>
+
+    <tag>
+	<name>failsafe</name>
+	<tag-class>com.taglib.wdjsp.mut.FailsafeTag</tag-class>
+	<body-content>JSP</body-content>
+	<description>
+	    Print out alternate text in the event of an uncaught exception.
+	</description>
+	<attribute>
+	    <name>alt</name>
+	    <required>false</required>
+	    <rtexprvalue>true</rtexprvalue>
+	</attribute>
+    </tag>
+</taglib>

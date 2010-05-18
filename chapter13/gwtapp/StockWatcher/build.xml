@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="stockwatcher" default="build" basedir=".">
+  <import file="../build.xml" />
+	
+  <!-- Configure path to GWT SDK -->
+  <property name="gwt.sdk" location="${root.dir}/lib/gwt" />
+  <dirname property="root.dir" file="${ant.file.common}"/>
+  <dirname property="curr.dir" file="${ant.file.stockwatcher}"/>
+
+  <condition property="XstartOnFirstThread" value="-XstartOnFirstThread">
+    <os family="mac"/>
+  </condition>
+  <condition property="XstartOnFirstThread" value="">
+    <not><os family="mac"/></not>
+  </condition>
+
+  <target name="init" depends="stockprovider">
+    <copy todir="${dist}">
+      <!--fileset dir="${lib}/pax" includes="*.jar"/-->
+      <fileset dir="${lib}/spring" includes="*.jar"/>
+    </copy>
+    <mkdir dir="war/WEB-INF/lib" />
+    <copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />
+  </target>
+  	
+  <target name="local.dist" depends="init, compile, launcher, shell, war, osgi">
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+    <copy todir="${dist}">
+      <path refid="shell.tty"/>
+    </copy>
+  </target>
+	
+  <path id="project.class.path">
+    <pathelement location="war/WEB-INF/classes"/>
+    <pathelement location="${gwt.sdk}/gwt-user.jar"/>
+    <fileset dir="${gwt.sdk}" includes="gwt-dev*.jar"/>
+    <fileset dir="${curr.dir}/../bundles" includes="gwtapp.stockprovider-*.jar"/>	
+    <fileset dir="${root.dir}/lib" includes="osgi.*.jar"/>	
+    <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
+  </path>
+
+  <target name="compile" description="Compile java source">
+    <mkdir dir="${build}" />
+    <javac srcdir="src" includes="**" encoding="utf-8"
+        destdir="${build}"
+        source="1.5" target="1.5" nowarn="true"
+        debug="true" debuglevel="lines,vars,source">
+      <classpath refid="project.class.path"/>
+    </javac>
+    <copy todir="${build}">
+      <fileset dir="src" excludes="**/*.java"/>
+    </copy>
+  </target>
+
+  <target name="gwtc" depends="compile" description="GWT compile to JavaScript">
+    <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+      <classpath>
+        <pathelement location="src"/>
+        <path refid="project.class.path"/>
+        <pathelement location="${build}" />
+      </classpath>
+      <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
+      <jvmarg value="-Xmx256M"/>
+      <jvmarg line="${XstartOnFirstThread}"/>
+      <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+      <arg value="com.google.gwt.sample.stockwatcher.StockWatcher"/>
+    </java>
+  </target>
+
+  <target name="hosted" depends="compile" description="Run hosted mode">
+    <java failonerror="true" fork="true" classname="com.google.gwt.dev.HostedMode">
+      <classpath>
+        <pathelement location="src"/>
+        <path refid="project.class.path"/>
+      </classpath>
+      <jvmarg value="-Xmx256M"/>
+      <jvmarg line="${XstartOnFirstThread}"/>
+      <arg value="-startupUrl"/>
+      <arg value="StockWatcher.html"/>
+      <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+      <arg value="com.google.gwt.sample.stockwatcher.StockWatcher"/>
+    </java>
+  </target>
+
+  <target name="build" depends="gwtc" description="Build this project" />
+
+  <target name="war" depends="build" description="Create a war file">
+    <zip destfile="${dist}/StockWatcher.war" basedir="war">
+      <zipfileset dir="${build}" prefix="WEB-INF/classes"/>
+      <fileset dir="war"/>
+    </zip>
+  </target>
+	
+  <target name="osgi">
+    <copy todir="war/WEB-INF/classes">
+      <fileset dir="${build}"/>
+    </copy>
+
+    <path id="bnd.class.path">
+      <fileset dir="${root.dir}/lib" includes="osgi.*.jar"/>
+      <fileset dir="${dist}" includes="StockWatcher.war"/>
+    </path>
+    <mkdir dir="../bundles" />
+    <pathconvert pathsep=":" property="bnd.cp" refid="bnd.class.path"/>
+    <bnd files="build.properties" classpath="${bnd.cp}" exceptions="true"/>
+  </target>
+	
+
+  <target name="local.clean" description="Cleans this project">
+    <delete dir="war/WEB-INF/classes" failonerror="false" />
+    <delete dir="war/stockwatcher" failonerror="false" />
+  </target>
+
+</project>

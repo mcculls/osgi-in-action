@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project name="paint" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="shape,common.compile"/>
+
+  <target name="init">
+    <copy todir="${dist}">
+      <fileset dir="${example.dir}/../paint-example-common/bundles" includes="*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.configadmin-*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.scr-*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.log-*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.shell*.jar"/>
+    </copy>
+  </target>
+
+  <target name="local.dist" depends="shape, init, common.local.dist,launcher,shell">
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+  </target>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete file="${example.dir}/launcher.jar"/>
+  </target>
+
+</project>

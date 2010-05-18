@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<project name="square" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="init">
+    <copy todir="${dist}">
+      <fileset dir="${lib}/blueprint" includes="*.jar"/>
+    </copy>
+  </target>
+
+  <target name="local.dist" depends="shape,init,common.local.dist,launcher,shell">
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+  </target>
+
+</project>

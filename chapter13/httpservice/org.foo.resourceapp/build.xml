@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project name="httpservice.resourceapp" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="init">
+    <copy todir="${dist}">
+      <fileset dir="${lib}/felix" includes="org.apache.felix.configadmin*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.http*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.log*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.ipojo-*.jar"/>
+    </copy>
+  </target>
+
+  <target name="local.dist" depends="init, common.local.dist, launcher, shell">
+    <taskdef name="ipojo"
+      classname="org.apache.felix.ipojo.task.IPojoTask"
+      classpath="${lib}/felix/org.apache.felix.ipojo.ant-1.4.0.jar" />
+    <ipojo
+      input="${dist}/${ant.project.name}-${version}.jar"
+      metadata = "ipojo/metadata.xml"
+     />
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+    <copy todir="${dist}">
+      <path refid="shell.tty"/>
+    </copy>
+  </target>
+
+</project>
