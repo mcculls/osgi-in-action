@@ -1,0 +1,25 @@
+DeploymentPackage-Symbolicname: org.foo.paint
+DeploymentPackage-Version: 2.0
+DeploymentPackage-FixPack: [1,2)
+
+Name: paint-4.0.jar
+Bundle-SymbolicName: org.foo.paint
+Bundle-Version: 4.0.0
+DeploymentPackage-Missing: true
+
+Name: shape-4.0.jar
+Bundle-SymbolicName: org.foo.shape
+Bundle-Version: 4.0.0
+DeploymentPackage-Missing: true
+
+Name: triangle-4.0.jar
+Bundle-SymbolicName: org.foo.shape.triangle
+Bundle-Version: 4.0.0
+
+Name: circle-4.0.jar
+Bundle-SymbolicName: org.foo.shape.circle
+Bundle-Version: 4.0.0
+
+Name: square-4.0.jar
+Bundle-SymbolicName: org.foo.shape.square
+Bundle-Version: 4.0.0

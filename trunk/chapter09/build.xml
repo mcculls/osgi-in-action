@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<project name="chapter09" default="dist">
+  <property name="chapter" value="chapter09"/>
+  <import file="../build.xml"/>
+</project>

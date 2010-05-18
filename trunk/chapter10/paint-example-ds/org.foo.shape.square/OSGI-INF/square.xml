@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0"
+  name="square">
+  <property name="simple.shape.name" value="Square" />
+  <property name="simple.shape.icon" value="square.png" />
+  <scr:implementation class="org.foo.shape.square.Square" />
+  <scr:service>
+     <scr:provide interface="org.foo.shape.SimpleShape"/>
+  </scr:service>  
+</scr:component>

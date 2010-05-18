@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+  <bean id="triangle" class="org.foo.shape.triangle.Triangle" /> 
+  <service id="shape" interface="org.foo.shape.SimpleShape" ref="triangle">
+    <service-properties>
+      <entry key="simple.shape.name" value="Triangle"/> 
+      <entry key="simple.shape.icon">
+        <bean class="org.foo.shape.triangle.IconFactory" factory-method="createIcon"/>
+      </entry> 
+    </service-properties>
+  </service>
+</blueprint>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<project name="webservice.impl" default="dist">
+
+  <property name="version" value="1.0"/>
+
+  <dirname property="example.dir" file="${ant.file.webservice.impl}"/>
+  <property file="${example.dir}/build.properties"/>
+  <import file="${example.dir}/../build.xml"/>
+
+  <target name="dosgi">
+    <ant dir="${example.dir}/org.foo.dosgi" inheritAll="false"/>
+  </target>
+
+</project>

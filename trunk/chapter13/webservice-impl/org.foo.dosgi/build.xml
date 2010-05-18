@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project name="foo.dosgi" default="dist">
+
+	<property file="build.properties" />
+	<import file="../build.xml" />
+
+	<target name="compile" depends="common.compile" />
+
+	<target name="init">
+		<copy todir="${dist}">
+			<fileset dir="${lib}/felix" includes="org.apache.felix.log*.jar" />
+			<fileset dir="${lib}/felix" includes="org.apache.felix.sigil.common.osgi*.jar" />
+		</copy>
+	</target>
+
+	<target name="local.dist" depends="init,common.local.dist,launcher,shell">
+		<copy file="${launcher.jar}" todir="${example.dir}" />
+		<copy todir="${dist}">
+			<path refid="shell.tty" />
+		</copy>
+	</target>
+
+	<target name="local.clean" depends="common.local.clean">
+		<delete file="${example.dir}/launcher.jar" />
+	</target>
+
+</project>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<project name="chapter14" default="dist">
+  <import file="../build.xml"/>
+
+  <!-- sub-projects have custom Eclipse files -->
+
+  <target name="local.wipe" depends="local.clean">
+    <delete dir="${dist}"/>
+  </target>
+
+  <target name="local.pde"/>
+
+</project>

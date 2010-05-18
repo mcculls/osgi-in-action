@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<project name="gwtapp" default="dist">
+
+  <property name="version" value="1.0"/>
+
+  <dirname property="example.dir" file="${ant.file.gwtapp}"/>
+  <property file="${example.dir}/build.properties"/>
+  <import file="${example.dir}/../build.xml"/>
+
+  <echo>${example.dir}/../build.xml</echo>
+
+  <target name="stockprovider">
+    <ant dir="${example.dir}/org.foo.stockprovider" inheritAll="false"/>
+  </target>
+
+</project>
