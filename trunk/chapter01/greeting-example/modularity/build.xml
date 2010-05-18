@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="modularity" default="dist">
+
+  <property name="version" value="1.0"/>
+  <dirname property="example.dir" file="${ant.file.modularity}"/>
+  <import file="../build.xml"/>
+
+  <target name="provider">
+    <ant dir="${example.dir}/org.foo.hello" inheritAll="false"/>
+  </target>
+
+  <target name="consumer">
+    <ant dir="${example.dir}/org.foo.hello.client" inheritAll="false"/>
+  </target>
+
+  <target name="main">
+    <ant dir="${example.dir}/org.foo.hello.main" inheritAll="false"/>
+  </target>
+
+</project>

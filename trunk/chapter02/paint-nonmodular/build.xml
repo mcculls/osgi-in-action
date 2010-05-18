@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project name="paint.example" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="local.dist" depends="compile">
+    <jar destfile="main.jar">
+      <fileset dir="${build}"/>
+      <manifest>
+        <attribute name="Main-Class" value="${module}.PaintFrame"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="local.pde"/>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete file="main.jar"/>
+  </target>
+
+</project>
