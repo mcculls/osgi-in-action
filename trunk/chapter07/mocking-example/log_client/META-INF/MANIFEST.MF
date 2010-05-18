@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Tool: Bnd-0.0.372
+Bundle-Name: log_client
+Created-By: 1.6.0_13 (Sun Microsystems Inc.)
+Bundle-RequiredExecutionEnvironment: J2SE-1.5,JavaSE-1.6
+Bundle-Version: 1.0
+Bnd-LastModified: 1257084267049
+Bundle-ManifestVersion: 2
+Bundle-Activator: org.foo.log.Activator
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0
+Import-Package: org.osgi.framework;version="[1.3,2.0)",org.osgi.servic
+ e.log;version="[1.3,2.0)"
+Bundle-SymbolicName: org.foo.log
+Bundle-DocURL: http://code.google.com/p/osgi-in-action/
+

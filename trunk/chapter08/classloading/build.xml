@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<project name="classloading.tips" default="dist">
+
+  <property name="Bundle-SymbolicName" value="${module}.${ant.project.name}"/>
+
+  <property name="version" value="1.0"/>
+  <dirname property="example.dir" file="${ant.file.classloading.tips}"/>
+  <import file="../build.xml"/>
+
+  <macrodef name="launch">
+    <attribute name="target"/>
+    <sequential>
+      <delete dir="${example.dir}/bundles"/>
+      <ant dir="${example.dir}/org.foo.hub.extender" inheritAll="false"/>
+      <ant dir="${example.dir}/org.foo.hub.test" inheritAll="false"/>
+      <ant dir="${example.dir}/@{target}" inheritAll="false"/>
+    </sequential>
+  </macrodef>
+
+  <target name="api">
+    <ant dir="${example.dir}/org.foo.hub" inheritAll="false"/>
+  </target>
+
+  <target name="build_1">
+    <launch target="class_not_found"/>
+  </target>
+
+  <target name="build_2">
+    <launch target="no_class_def_found"/>
+  </target>
+
+  <target name="build_3">
+    <launch target="class_cast_issues"/>
+  </target>
+
+  <target name="build_4">
+    <launch target="no_uses_constraints"/>
+  </target>
+
+  <target name="build_5">
+    <launch target="mismatched_uses"/>
+  </target>
+
+  <target name="build_6">
+    <launch target="for_name_issues"/>
+  </target>
+
+  <target name="build_7">
+    <launch target="tccl_issues"/>
+  </target>
+
+</project>

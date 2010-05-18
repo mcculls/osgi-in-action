@@ -1,0 +1,7 @@
+Export-Package: org.apache.commons.beanutils.*
+Private-Package: !org.apache.commons.collections.*, *
+Import-Package: *
+
+# to avoid automatically generating imports for all exports use:
+#---------------------------------------------------------------
+# Export-Package: org.apache.commons.beanutils.*;-noimport:=true

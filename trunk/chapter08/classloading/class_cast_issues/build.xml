@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<project name="class_cast" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="api,common.compile"/>
+
+</project>

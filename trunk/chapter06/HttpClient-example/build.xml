@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<project name="httpclient.example" default="dist">
+
+  <dirname property="example.dir" file="${ant.file.httpclient.example}"/>
+  <import file="../build.xml"/>
+
+</project>
