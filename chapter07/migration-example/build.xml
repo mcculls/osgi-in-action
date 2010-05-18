@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<project name="migration.example" default="dist">
+
+  <property name="version" value="1.5.3"/>
+  <dirname property="example.dir" file="${ant.file.migration.example}"/>
+  <import file="../build.xml"/>
+
+  <property name="cobertura.dir"
+      value="${example.dir}/cobertura.osgi/cobertura-1.9.3"/>
+
+  <target name="main">
+    <ant dir="${example.dir}/main" inheritAll="false"/>
+  </target>
+
+  <path id="cobertura.classpath">
+    <fileset dir="${cobertura.dir}">
+      <include name="cobertura.jar"/>
+      <include name="lib/**/*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="reset.coverage">
+    <delete file="${dist}/cobertura.ser"/>
+    <delete dir="${build}"/>
+  </target>
+
+  <target name="instrument" depends="reset.coverage,compile" if="instrument">
+
+    <ant dir="${example.dir}/cobertura.osgi"
+        target="unpack.cobertura" inheritAll="false"/>
+
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+
+    <cobertura-instrument datafile="${dist}/cobertura.ser">
+      <fileset dir="${build}">
+        <include name="**/*.class"/>
+        <exclude name="**/*Test*.class"/>
+      </fileset>
+    </cobertura-instrument>
+
+  </target>
+
+  <target name="coverage" if="instrument">
+
+    <ant dir="${example.dir}/cobertura.osgi"
+        target="unpack.cobertura" inheritAll="false"/>
+
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+
+    <cobertura-report format="html"
+        srcdir="${example.dir}/main/src"
+        datafile="${dist}/cobertura.ser"
+        destdir="${example.dir}/reports"/>
+
+  </target>
+
+  <target name="test" depends="dist">
+    <mkdir dir="${example.dir}/reports"/>
+
+    <java fork="true" failonerror="true" taskname="junit"
+        dir="${example.dir}/reports" classname="junit.textui.TestRunner">
+
+      <classpath path="${build.cp}">
+        <fileset dir="${dist}" includes="*.jar"/>
+      </classpath>
+
+      <sysproperty key="net.sourceforge.cobertura.datafile"
+          value="${dist}/cobertura.ser"/>
+
+      <arg value="org.apache.commons.pool.TestAll"/>
+
+    </java>
+
+    <antcall target="coverage"/>
+  </target>
+
+  <target name="test.osgi" depends="dist">
+    <mkdir dir="${example.dir}/reports"/>
+
+    <java fork="true" failonerror="false" taskname="junit.osgi"
+        jar="${example.dir}/launcher.jar">
+
+      <sysproperty key="net.sourceforge.cobertura.datafile"
+          value="${dist}/cobertura.ser"/>
+
+      <!-- force eager loading of report classes -->
+      <sysproperty key="catalina.home" value="foo"/>
+
+      <arg value="bundles"/>
+      <arg value="org.apache.commons.pool.TestAll"/>
+
+    </java>
+
+    <antcall target="coverage"/>
+  </target>
+
+  <target name="local.clean" depends="reset.coverage,common.local.clean">
+    <delete dir="${example.dir}/reports"/>
+  </target>
+
+</project>

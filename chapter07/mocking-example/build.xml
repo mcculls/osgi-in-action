@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<project name="mocking.example" default="dist">
+
+  <property name="version" value="1.0"/>
+  <dirname property="example.dir" file="${ant.file.mocking.example}"/>
+  <import file="../build.xml"/>
+
+  <target name="local.pde" depends="local.dist"/>
+  <target name="local.wipe" depends="local.clean"/>
+
+  <property name="build.cp"
+      value="${junit.jar}:${lib}/osgi.core.jar:${lib}/osgi.cmpn.jar:
+             ${example.dir}/mock_test/lib/easymock-2.5.2.jar"/>
+
+  <target name="test" depends="dist">
+    <mkdir dir="${example.dir}/reports"/>
+    <junit showoutput="true" printsummary="true">
+      <classpath path="${build.cp}">
+        <fileset dir="${dist}" includes="*.jar"/>
+      </classpath>
+      <formatter type="plain"/>
+      <batchtest todir="${example.dir}/reports">
+        <zipfileset src="${dist}/mock_test-${version}.jar">
+          <include name="**/*Tests.class"/>
+        </zipfileset>
+      </batchtest>
+    </junit>
+  </target>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete dir="${example.dir}/reports"/>
+  </target>
+
+</project>

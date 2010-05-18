@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+
+<!--
+     This is a build.xml file for building jEdit.
+-->
+
+<project name="jEdit" default="dist" basedir=".">
+
+<property name="fop.dir" value="....path to your FOP jar files..."/>
+
+	<property file="build.properties"/>
+
+	<target name="init">
+		<available property="jdk14" classname="java.awt.KeyboardFocusManager" />
+		<available property="jdk15" classname="javax.swing.plaf.metal.OceanTheme" />
+		<mkdir dir="${build.directory}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<javac
+			srcdir="."
+			destdir="${build.directory}"
+			includeJavaRuntime="yes"
+			debug="yes"
+			encoding="UTF8" 
+		>
+			<classpath path="../../../lib/osgi.core.jar"/>
+			<include name="bsh/**/*.java"/>
+			<include name="com/microstar/xml/*.java"/>
+			<include name="gnu/regexp/*.java"/>
+			<include name="installer/*.java"/>
+			<include name="org/gjt/sp/jedit/**/*.java"/>
+			<exclude name="org/gjt/sp/jedit/Java14.java"/>
+			<exclude name="org/gjt/sp/jedit/print/BufferPrinter1_4.java"/>
+			<include name="org/gjt/sp/util/*.java"/>
+		</javac>
+	</target>
+
+	<target name="compile14" depends="init" if="jdk14">
+		<javac
+			srcdir="."
+			destdir="${build.directory}"
+			includeJavaRuntime="yes"
+			debug="yes"
+			encoding="UTF8" 
+		>
+			<include name="org/gjt/sp/jedit/Java14.java"/>
+			<include name="org/gjt/sp/jedit/print/BufferPrinter1_4.java"/>
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile,compile14" description="Compile and package jEdit.">
+		<!-- jar
+			jarfile="jedit.jar"
+			manifest="org/gjt/sp/jedit/jedit.manifest"
+			compress="false"
+		>
+			<fileset dir="${build.directory}">
+				<include name="bsh/**/*.class"/>
+				<include name="com/**/*.class"/>
+				<include name="gnu/**/*.class"/>
+				<include name="org/**/*.class"/>
+			</fileset>
+		-->
+		<copy todir="${build.directory}">
+			<fileset dir=".">
+				<include name="bsh/commands/*.bsh"/>
+
+				<include name="gnu/regexp/MessagesBundle.properties"/>
+
+				<include name="org/gjt/sp/jedit/**/*.dtd"/>
+				<include name="org/gjt/sp/jedit/icons/*.gif"/>
+				<include name="org/gjt/sp/jedit/icons/*.jpg"/>
+				<include name="org/gjt/sp/jedit/icons/*.png"/>
+				<include name="org/gjt/sp/jedit/*.props"/>
+
+				<include name="org/gjt/sp/jedit/actions.xml"/>
+				<include name="org/gjt/sp/jedit/browser.actions.xml"/>
+				<include name="org/gjt/sp/jedit/dockables.xml"/>
+				<include name="org/gjt/sp/jedit/services.xml"/>
+
+				<include name="org/gjt/sp/jedit/default.abbrevs"/>
+			</fileset>
+		</copy>
+		<!-- /jar -->
+
+		<taskdef resource="aQute/bnd/ant/taskdef.properties"
+			classpath="../../../lib/bnd-0.0.356.jar" />
+
+		<bnd classpath="${build.directory}"
+			files="jedit-thirdparty.bnd,jedit-main.bnd,jedit-engine.bnd" />
+
+	</target>
+
+	<target name="generate-docbook-wrapper">
+		<delete file="doc/docbook-wrapper-${format}.xsl" />
+		<echo file="doc/docbook-wrapper-${format}.xsl"
+			message="&lt;xsl:stylesheet"/>
+		<echo file="doc/docbook-wrapper-${format}.xsl" append="true"
+			message=" xmlns:xsl='http://www.w3.org/1999/XSL/Transform'"/>
+		<echo file="doc/docbook-wrapper-${format}.xsl" append="true"
+			message=" version='1.0'&gt;"/>
+		<echo file="doc/docbook-wrapper-${format}.xsl" append="true"
+			message="&lt;xsl:import href='${docbook.xsl}/${stylesheet}'/&gt;"/>
+		<echo file="doc/docbook-wrapper-${format}.xsl" append="true"
+			message="&lt;/xsl:stylesheet&gt;"/>
+		<mkdir dir="${build.directory}"/>
+	</target>
+
+	<target name="docs-html" depends="init" description="Generate HTML documents with xsltproc tool.">
+	
+		<property name="format" value="html" />
+		<property name="stylesheet" value="html/chunk.xsl" />
+		<antcall target="generate-docbook-wrapper"/>
+
+		<exec executable="xsltproc" dir="doc/users-guide">
+			<arg value="--catalogs"/>
+			<arg value="../jedithtml.xsl"/>
+			<arg value="users-guide.xml"/>
+		</exec>
+		<exec executable="xsltproc" dir="doc/FAQ">
+			<arg value="--catalogs"/>
+			<arg value="../jedithtml.xsl"/>
+			<arg value="faq.xml"/>
+		</exec>
+		<exec executable="xsltproc" dir="doc/news42">
+			<arg value="--catalogs"/>
+			<arg value="../jedithtml.xsl"/>
+			<arg value="news.xml"/>
+		</exec>
+	</target>
+
+	<target name="docs-fo" depends="init" description="Generate FOT documents with xsltproc tool.">
+		<property name="format" value="fo" />
+		<property name="stylesheet" value="fo/docbook.xsl" />
+		<antcall target="generate-docbook-wrapper"/>
+		
+		<exec executable="xsltproc" dir="doc/users-guide">
+			<arg value="--param"/>
+			<arg value="paper.type"/>
+			<arg value="'${paper}'"/>
+			<arg value="--output"/>
+			<arg value="users-guide.fot"/>
+			<arg value="--catalogs"/>
+			<arg value="../jeditfo.xsl"/>
+			<arg value="users-guide.xml"/>
+		</exec>
+		
+		<exec executable="${fop.bin}" dir="doc/users-guide">
+			<arg value="users-guide.fot"/>
+			<arg value="-pdf"/>
+			<arg value="users-guide-${paper}.pdf"/>
+		</exec>
+	</target>
+
+	<target name="docs-fo-a4" depends="init" description="Generate FOT documents with xsltproc tool, A4 paper size.">
+		<property name="paper" value="A4" />
+		<antcall target="docs-fo"/>
+	</target>
+
+	<target name="docs-fo-letter" depends="init" description="Generate FOT documents with xsltproc tool, US letter paper size.">
+		<property name="paper" value="USletter" />
+		<antcall target="docs-fo"/>
+	</target>
+
+	<path id="doclet.class.path">
+		<pathelement location="${tools.jar}"/>
+		<pathelement location="."/>
+	</path>
+
+	<target name="javadoc" description="Generate documentation.">
+		<delete dir="doc/api"/>
+		<mkdir dir="doc/api"/>
+
+		<javac
+			srcdir="."
+			destdir="."
+			includeJavaRuntime="yes"
+		>
+			<classpath refid="doclet.class.path"/>
+			<include name="doclet/GenerateTocXML.java"/>
+		</javac>
+
+		<javadoc packagenames="bsh.*, com.*, gnu.*, org.*"
+			sourcepath="."
+			classpath="."
+			destdir="doc/api"
+			doctitle="jEdit API" />
+
+		<javadoc classpath="."
+			doclet="doclet.GenerateTocXML"
+			docletpath="."
+			packagenames="bsh.*, com.*, gnu.*, org.*"
+			sourcepath="."/>
+	</target>
+
+	<target name="clean" description="Clean old stuff.">
+		<delete>
+			<fileset dir="${build.directory}" includes="**/*.class"/>
+			<fileset dir="." includes="**/*~" defaultexcludes="no"/>
+			<fileset dir="." includes="**/#*#" defaultexcludes="no"/>
+			<fileset dir="." includes="**/*.rej"/>
+			<fileset dir="." includes="**/*.orig"/>
+			<fileset dir="." includes="**/.*.swp"/>
+			<fileset dir="." includes="**/.#*"/>
+			<fileset dir="." includes="**/.new*"/>
+			<fileset dir="." includes="**/.directory"/>
+<!--
+			<fileset dir="." includes="doc/users-guide/*.html"/>
+			<fileset dir="." includes="doc/users-guide/toc.xml"/>
+			<fileset dir="." includes="doc/users-guide/word-index.xml"/>
+
+			<fileset dir="." includes="doc/FAQ/*.html"/>
+			<fileset dir="." includes="doc/FAQ/toc.xml"/>
+			<fileset dir="." includes="doc/FAQ/word-index.xml"/>
+-->
+			<fileset dir="." includes="doc/users-guide/*.pdf"/>
+			<fileset dir="." includes="doc/users-guide/*.aux"/>
+			<fileset dir="." includes="doc/users-guide/*.tex"/>
+			<fileset dir="." includes="doc/users-guide/*.out"/>
+			<fileset dir="." includes="doc/users-guide/*.log"/>
+			<fileset dir="." includes="**/users-guide/*.fot"/>
+
+			<fileset dir="." includes="installer/jedit-*"/>
+		</delete>
+		<delete dir="doc/api"/>
+	</target>
+
+	<!-- Generate tags using 'ctags' program from ctags.sourceforge.net -->
+	<target name="tags" description="Generate tags using ctags program.">
+		<exec executable="ctags">
+			<arg value="-R" />
+			<arg path="." />
+		</exec>
+	</target>
+
+	<!-- alias OSGi in Action targets -->
+	<target name="wipe" depends="clean"/>
+	<target name="pde"/>
+
+</project>

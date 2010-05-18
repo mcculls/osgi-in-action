@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<project name="paint.example" default="dist">
+
+  <property name="version" value="5.0"/>
+  <dirname property="example.dir" file="${ant.file.paint.example}"/>
+  <import file="../build.xml"/>
+
+  <target name="shape">
+    <ant dir="${example.dir}/org.foo.shape" inheritAll="false"/>
+  </target>
+
+  <target name="circle">
+    <ant dir="${example.dir}/org.foo.shape.circle" inheritAll="false"/>
+  </target>
+
+  <target name="circle.resource-de">
+    <ant dir="${example.dir}/org.foo.shape.circle.resource-de" inheritAll="false"/>
+  </target>
+
+  <target name="triangle">
+    <ant dir="${example.dir}/org.foo.shape.triangle" inheritAll="false"/>
+  </target>
+
+  <target name="triangle.resource-de">
+    <ant dir="${example.dir}/org.foo.shape.triangle.resource-de" inheritAll="false"/>
+  </target>
+
+  <target name="square">
+    <ant dir="${example.dir}/org.foo.shape.square" inheritAll="false"/>
+  </target>
+
+  <target name="square.resource-de">
+    <ant dir="${example.dir}/org.foo.shape.square.resource-de" inheritAll="false"/>
+  </target>
+
+  <target name="paint">
+    <ant dir="${example.dir}/org.foo.paint" inheritAll="false"/>
+  </target>
+
+</project>

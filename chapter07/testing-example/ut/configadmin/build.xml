@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<project name="unit_tests" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <copy file="${lib}/felix/org.apache.felix.configadmin-1.2.7-SNAPSHOT.jar"
+    tofile="${dist}/configadmin.jar"/>
+
+</project>

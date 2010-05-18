@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<project name="dangling.services" default="dist">
+
+  <property name="Bundle-SymbolicName" value="${module}.${ant.project.name}"/>
+
+  <property name="version" value="2.0"/>
+  <dirname property="example.dir" file="${ant.file.dangling.services}"/>
+  <import file="../build.xml"/>
+
+</project>

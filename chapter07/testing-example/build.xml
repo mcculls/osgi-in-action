@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<project name="testing.example" default="dist">
+
+  <property name="version" value="1.0"/>
+  <dirname property="example.dir" file="${ant.file.testing.example}"/>
+  <import file="../build.xml"/>
+
+  <property name="build.cp"
+      value="${junit.jar}:
+             ${lib}/osgi.cmpn.jar:
+             ${lib}/commons/commons-logging-1.1.1.jar:
+             ${lib}/spring/com.springsource.org.apache.log4j_1.2.15.jar:
+             ${lib}/commons/commons-discovery-0.4.jar:
+             ${lib}/pax/pax-runner-no-jcl-1.3.0.jar:
+             ${lib}/pax/pax-exam-junit-1.1.0.jar:
+             ${lib}/pax/pax-exam-junit-extender-1.1.0.jar:
+             ${lib}/pax/pax-exam-container-rbc-client-1.1.0.jar:
+             ${lib}/pax/pax-exam-container-default-1.1.0.jar:
+             ${lib}/pax/pax-exam-container-rbc-1.1.0.jar:
+             ${lib}/pax/pax-exam-runtime-1.1.0.jar:
+             ${lib}/pax/pax-exam-spi-1.1.0.jar:
+             ${lib}/pax/pax-exam-1.1.0.jar"/>
+
+  <macrodef name="launch">
+    <attribute name="target"/>
+    <sequential>
+      <mkdir dir="${example.dir}/reports"/>
+      <junit showoutput="true" printsummary="true">
+        <classpath path="${build.cp}">
+          <fileset dir="${dist}" includes="*.jar"/>
+        </classpath>
+        <formatter type="plain"/>
+        <batchtest todir="${example.dir}/reports">
+          <zipfileset src="${dist}/@{target}_tests-${version}.jar">
+            <include name="**/*Test.class"/>
+          </zipfileset>
+        </batchtest>
+      </junit>
+    </sequential>
+  </macrodef>
+
+  <target name="test.unit" depends="dist">
+    <launch target="unit"/>
+  </target>
+
+  <target name="test.container" depends="dist">
+    <launch target="container"/>
+  </target>
+
+  <target name="test.integration" depends="dist">
+    <launch target="integration"/>
+  </target>
+
+  <target name="test.management" depends="dist">
+    <launch target="management"/>
+  </target>
+
+  <target name="test" depends="dist">
+    <mkdir dir="${example.dir}/reports"/>
+    <junit showoutput="true" printsummary="true">
+      <classpath path="${build.cp}">
+        <fileset dir="${dist}" includes="*.jar"/>
+      </classpath>
+      <formatter type="plain"/>
+      <batchtest todir="${example.dir}/reports">
+        <zipfileset src="${dist}/unit_tests-${version}.jar">
+          <include name="**/*Test.class"/>
+        </zipfileset>
+        <zipfileset src="${dist}/container_tests-${version}.jar">
+          <include name="**/*Test.class"/>
+        </zipfileset>
+        <zipfileset src="${dist}/integration_tests-${version}.jar">
+          <include name="**/*Test.class"/>
+        </zipfileset>
+        <zipfileset src="${dist}/management_tests-${version}.jar">
+          <include name="**/*Test.class"/>
+        </zipfileset>
+      </batchtest>
+    </junit>
+  </target>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete dir="${example.dir}/reports"/>
+  </target>
+
+  <target name="local.pde"/>
+
+</project>

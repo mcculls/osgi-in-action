@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<project name="paint" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="shape,common.compile"/>
+
+  <target name="local.dist" depends="common.local.dist,launcher">
+    <copy file="${launcher.jar}" todir="${example.dir}"/>
+  </target>
+
+  <target name="local.clean" depends="common.local.clean">
+    <delete file="${example.dir}/launcher.jar"/>
+  </target>
+
+</project>
