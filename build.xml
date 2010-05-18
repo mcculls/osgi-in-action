@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<project name="osgi-in-action" default="dist">
+
+  <import file="common.xml"/>
+
+  <macrodef name="iterate">
+    <attribute name="target"/>
+    <sequential>
+      <subant target="@{target}" verbose="true">
+        <fileset dir="." includes="*/build.xml"/>
+      </subant>
+    </sequential>
+  </macrodef>
+
+  <target name="launcher">
+    <ant dir="${root.dir}/launcher" inheritAll="false"/>
+  </target>
+
+  <target name="shell">
+    <ant dir="${root.dir}/shell" inheritAll="false"/>
+  </target>
+
+</project>

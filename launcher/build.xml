@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project name="launcher" default="dist">
+
+  <property name="chapter" value="common"/>
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <property name="build.cp" value="${felix.jar}"/>
+
+  <target name="local.dist" depends="compile">
+    <jar destfile="${dist}/launcher.jar">
+      <zipfileset src="${felix.jar}"/>
+      <fileset dir="${build}"/>
+      <manifest>
+        <attribute name="Main-Class" value="${module}.Main"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="local.pde"/>
+
+</project>
