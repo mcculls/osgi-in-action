@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<project name="org.foo.shell.telnet" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="org.foo.shell,common.compile"/>
+
+</project>

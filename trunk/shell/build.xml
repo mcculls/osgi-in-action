@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project name="shell" default="dist">
+
+  <property name="chapter" value="common"/>
+  <dirname property="example.dir" file="${ant.file.shell}"/>
+  <import file="../build.xml"/>
+
+  <target name="shell.check">
+    <condition property="shell.exists">
+      <and>
+        <available file="${dist}/org.foo.shell-${version}.jar"/>
+        <available file="${dist}/org.foo.shell.tty-${version}.jar"/>
+        <available file="${dist}/org.foo.shell.telnet-${version}.jar"/>
+      </and>
+    </condition>
+  </target>
+
+  <target name="dist" depends="shell.check" unless="shell.exists">
+    <ant dir="${example.dir}/org.foo.shell.tty"
+         target="local.dist" inheritAll="false"/>
+    <ant dir="${example.dir}/org.foo.shell.telnet"
+         target="local.dist" inheritAll="false"/>
+  </target>
+
+  <target name="org.foo.shell">
+    <ant dir="${example.dir}/org.foo.shell"
+         target="local.dist" inheritAll="false"/>
+  </target>
+
+</project>

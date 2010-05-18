@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<project name="org.foo.shell" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="local.dist" depends="common.local.dist">
+    <copy todir="${dist}">
+      <fileset dir="${lib}" includes="osgi.cmpn.jar,osgi.obr.jar"/>
+    </copy>
+  </target>
+
+</project>
