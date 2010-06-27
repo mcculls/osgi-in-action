@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<project name="shell" default="dist">
+
+  <property name="version" value="2.0"/>
+  <dirname property="example.dir" file="${ant.file.shell}"/>
+  <import file="../build.xml"/>
+
+</project>
