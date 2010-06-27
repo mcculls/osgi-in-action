@@ -1,0 +1,14 @@
+ALLOW {
+   [ org.osgi.service.condpermadmin.BundleSignerCondition "CN=core, O=baz, C=DE" ]
+   ( java.security.AllPermission "*" "*")
+} "Bundles Signed by core get AllPermission"
+ALLOW {
+   [ org.foo.condition.ask.AskUserCondition "Do you want to allow $symbolic-name to provide a shape?" ]
+   ( org.osgi.framework.ServicePermission "org.foo.shape.SimpleShape" "register") 
+} "Otherwise we ask the User if the bundle wants to register a shape service"
+DENY {
+   ( org.osgi.framework.ServicePermission "org.foo.shape.SimpleShape" "register")
+} "We deny bundles to register shape services otherwise"
+ALLOW {
+   ( java.security.AllPermission "*" "*")
+} "But give all other not denied permissions to all bundles"
