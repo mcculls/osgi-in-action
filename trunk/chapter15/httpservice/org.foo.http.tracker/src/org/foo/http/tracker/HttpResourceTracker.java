@@ -62,7 +62,7 @@ class HttpResourceTracker extends BundleTracker {
   }
   
   private String[] findResources(Bundle bundle) {
-    String resources = (String) bundle.getHeaders().get( "HTTP_Resources" );
+    String resources = (String) bundle.getHeaders().get( "HTTP-Resources" );
     if ( resources == null ) return null;
     ArrayList<String> ret = new ArrayList<String>();
     StringTokenizer tok = new StringTokenizer(resources, ",");

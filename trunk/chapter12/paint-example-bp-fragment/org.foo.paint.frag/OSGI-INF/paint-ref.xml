@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+  <reference-list id="shape" interface="org.foo.shape.SimpleShape" availability="optional"> 
+    <reference-listener 
+      bind-method="addShape"
+      unbind-method="removeShape"
+      ref="paintFrame"/> 
+  </reference-list>
+</blueprint>

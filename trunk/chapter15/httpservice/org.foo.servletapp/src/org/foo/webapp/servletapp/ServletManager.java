@@ -18,7 +18,7 @@ import org.osgi.service.log.LogService;
 @Component(immediate=true)
 public class ServletManager {
   
-//  @Requires(optional=true)
+  @Requires(optional=true)
   private LogService log;
   
   private LinkedList<HttpService> services = new LinkedList<HttpService>();  
@@ -39,14 +39,14 @@ public class ServletManager {
       try {
         http.registerServlet(ctx, s, null, null);
       } catch (ServletException e) {
-        log.log(LogService.LOG_WARNING, "Failed to registerServlet", e);
+        //log.log(LogService.LOG_WARNING, "Failed to registerServlet", e);
       } catch (NamespaceException e) {
-        log.log(LogService.LOG_WARNING, "Failed to registerServlet", e);
+        //log.log(LogService.LOG_WARNING, "Failed to registerServlet", e);
       }
     }
   }
   
-  @Unbind(aggregate=true)
+  @Unbind
   void unbindHttp(HttpService http) {
     Map<String, Servlet> snapshot;
     
@@ -60,7 +60,7 @@ public class ServletManager {
     }
   }
   
-  @Bind
+  @Bind(aggregate=true)
   void bindServlet(Servlet servlet, Map attrs) {
     String ctx = (String) attrs.get("web-contextpath");
     if ( ctx != null ) {
@@ -75,9 +75,9 @@ public class ServletManager {
         try {
           s.registerServlet(ctx, servlet, null, null);
         } catch (ServletException e) {
-          log.log(LogService.LOG_WARNING, "Failed to registerServlet", e);
+          //log.log(LogService.LOG_WARNING, "Failed to registerServlet", e);
         } catch (NamespaceException e) {
-          log.log(LogService.LOG_WARNING, "Failed to registerServlet", e);
+          //log.log(LogService.LOG_WARNING, "Failed to registerServlet", e);
         }
       }
     }
