@@ -17,7 +17,7 @@ import org.apache.felix.ipojo.annotations.ServiceProperty;
 public class HelloServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
-
+  
   @ServiceProperty(name = "web-contextpath")
   String ctx = "/hello";
 

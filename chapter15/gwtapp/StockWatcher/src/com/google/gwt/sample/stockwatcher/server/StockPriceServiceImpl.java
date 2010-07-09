@@ -24,7 +24,7 @@ public class StockPriceServiceImpl extends RemoteServiceServlet implements Stock
 
   @Override
   public void init() throws ServletException {
-    BundleContext ctx = (BundleContext) getServletContext().getAttribute(OSGiConstants.OSGI_BUNDLE_CONTEXT_ATTRIBUTE);
+    BundleContext ctx = (BundleContext) getServletContext().getAttribute("osgi-bundlecontext");
     tracker = new ServiceTracker(ctx, StockProvider.class.getName(), null);
     tracker.open();
   }

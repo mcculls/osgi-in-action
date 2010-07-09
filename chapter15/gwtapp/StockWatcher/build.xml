@@ -17,7 +17,9 @@
   <target name="init" depends="stockprovider">
     <copy todir="${dist}">
       <!--fileset dir="${lib}/pax" includes="*.jar"/-->
-      <fileset dir="${lib}/spring" includes="*.jar"/>
+      <!--fileset dir="${lib}/spring" includes="*.jar"/-->
+      <fileset dir="${lib}/gemini-web" includes="*.jar"/>
+      <fileset dir="${lib}/gemini-web/dep" includes="*.jar"/>
     </copy>
     <mkdir dir="war/WEB-INF/lib" />
     <copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />

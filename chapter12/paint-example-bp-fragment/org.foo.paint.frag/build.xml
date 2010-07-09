@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<project name="paint.frag" default="dist">
+
+  <property file="build.properties"/>
+  <import file="../build.xml"/>
+
+  <target name="compile" depends="shape,common.compile"/>
+
+  <target name="init">
+  </target>
+
+  <target name="local.dist" depends="windowlistener, shape, init, common.local.dist,launcher,shell">
+  </target>
+
+  <target name="local.clean" depends="common.local.clean">
+  </target>
+
+</project>
