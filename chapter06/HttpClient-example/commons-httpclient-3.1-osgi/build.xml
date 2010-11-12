@@ -11,8 +11,8 @@
   <target name="local.dist" depends="common.local.dist,launcher,shell">
     <copy file="${launcher.jar}" todir="${example.dir}"/>
     <copy todir="${dist}">
-      <fileset dir="${lib}/spring" includes="*slf4j*.jar"/>
-      <fileset dir="${lib}/spring" includes="*log*.jar"/>
+      <fileset dir="${lib}/aries" includes="*slf4j*.jar"/>
+      <fileset dir="${lib}/aries" includes="*log*.jar"/>
       <path refid="shell.tty"/>
     </copy>
   </target>

@@ -20,10 +20,29 @@ import org.osgi.service.condpermadmin.ConditionalPermissionUpdate;
 public class Activator implements BundleActivator
 {
 
-    private volatile List m_previous;
-
     public void start(BundleContext context) throws Exception
     {
+      File policyFile = getPolicyFile(context);                             
+      List<String> encodedInfos = readPolicyFile(policyFile);
+	  encodedInfos.add(0, "ALLOW {"                                          
+        + "[org.osgi.service.condpermadmin.BundleLocationCondition \""
+        + context.getBundle().getLocation() + "\"]"
+        + "(java.security.AllPermission \"*\" \"*\")"
+        + "} \"Management Agent Policy\"");
+      ConditionalPermissionAdmin cpa = getConditionalPermissionAdmin(context);      
+      ConditionalPermissionUpdate u = cpa.newConditionalPermissionUpdate();  
+      List infos = u.getConditionalPermissionInfos();                        
+      infos.clear();                                                         
+      for (String encodedInfo : encodedInfos) {                              
+        infos.add(cpa.newConditionalPermissionInfo(encodedInfo));
+      }
+      if (!u.commit()) {                                                     
+        throw new ConcurrentModificationException(                          
+		  "Permissions changed during update");
+      }
+    }
+
+    private File getPolicyFile(BundleContext context) throws BundleException {
         String policyFilePath = context.getProperty("org.foo.policy.file");
         if (policyFilePath == null) {
             policyFilePath = "security.policy";
@@ -32,31 +51,27 @@ public class Activator implements BundleActivator
         if (!policyFile.isFile()) {
             throw new BundleException("No policy file at: " + policyFile.getAbsolutePath());
         }
-        ConditionalPermissionAdmin cpa = getCPA(context);
-        
-        if (cpa == null) {
-            throw new BundleException("No ConditionalPermissionAdmin found.");
-        }
+		return policyFile;
+	}
+	
+	private List<String> readPolicyFile(File policyFile) throws Exception {
         BufferedReader policyReader = null;
         Exception org = null;
         try
         {
             policyReader = new BufferedReader(new FileReader(policyFile));
             List policy = new ArrayList();
-            policy.add("ALLOW {" +
-                "[org.osgi.service.condpermadmin.BundleLocationCondition \"" + context.getBundle().getLocation() + "\"]" +
-                "(java.security.AllPermission \"*\" \"*\")" +
-                "} \"Management Agent Policy\"");
             StringBuffer buffer = new StringBuffer();
             for (String input = policyReader.readLine(); input != null; input = policyReader.readLine()) {
-                if (input.trim().startsWith("#")) {continue;}
-                buffer.append(input);
-                if (input.contains("}")) {
+                if (!input.trim().startsWith("#")) {
+                  buffer.append(input);
+                  if (input.contains("}")) {
                     policy.add(buffer.toString());
                     buffer = new StringBuffer();
-                }
+                  }
+				}
             }
-            m_previous = setUpPolicy(cpa, policy);
+			return policy;
         }
         catch (Exception ex) {
             org = ex;
@@ -77,37 +92,11 @@ public class Activator implements BundleActivator
         }
     }
 
-    private List setUpPolicy(ConditionalPermissionAdmin cpa,
-        List policy) throws ConcurrentModificationException
-    {
-        ConditionalPermissionUpdate update = cpa.newConditionalPermissionUpdate();
-        List list = update.getConditionalPermissionInfos();
-        List previous = new ArrayList();
-        for (Iterator iter = list.iterator(); iter.hasNext();) {
-            previous.add(((ConditionalPermissionInfo) iter.next()).getEncoded());
-        }
-        list.clear();
-        for (Iterator iter = policy.iterator();iter.hasNext();) {
-            list.add(cpa.newConditionalPermissionInfo((String) iter.next()));
-        }
-        if (!update.commit()) {
-            throw new ConcurrentModificationException("Conditional Permission Admin was updated concurrently");
-        }
-        return previous;
-    }
-
     public void stop(BundleContext context) throws Exception
     {
-        ConditionalPermissionAdmin cpa = getCPA(context);
-        if (cpa == null) {
-            throw new BundleException("No ConditionalPermissionAdmin found.");
-        }
-        if (m_previous != null) {
-            setUpPolicy(cpa, m_previous);
-        }
     }
 
-    private ConditionalPermissionAdmin getCPA(BundleContext context) throws BundleException
+    private ConditionalPermissionAdmin getConditionalPermissionAdmin(BundleContext context) throws BundleException
     {
         ServiceReference ref = context.getServiceReference(ConditionalPermissionAdmin.class.getName());
         ConditionalPermissionAdmin result = null;

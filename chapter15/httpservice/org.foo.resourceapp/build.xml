@@ -10,6 +10,7 @@
       <fileset dir="${lib}/felix" includes="org.apache.felix.http*.jar"/>
       <fileset dir="${lib}/felix" includes="org.apache.felix.log*.jar"/>
       <fileset dir="${lib}/felix" includes="org.apache.felix.ipojo-*.jar"/>
+      <fileset dir="${lib}/felix" includes="org.apache.felix.ipojo.annotations-*.jar"/>
     </copy>
   </target>
 

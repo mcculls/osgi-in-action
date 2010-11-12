@@ -1,0 +1,10 @@
+This version of Gemini Web has been patched from the 1.1.0.M01 build 
+to fix three issues that prevented it running on Felix.
+
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=319782
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=319519
+* https://issuetracker.springsource.com/browse/EBR-662
+
+Plus the following patch to allow it to run along side Apache CXF
+
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=319955

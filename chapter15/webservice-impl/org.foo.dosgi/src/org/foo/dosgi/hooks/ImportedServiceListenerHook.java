@@ -13,6 +13,7 @@ import org.osgi.framework.hooks.service.ListenerHook;
 
 public class ImportedServiceListenerHook implements ListenerHook {
 
+  private static final LogUtil log = LogUtil.getLog(ImportedServiceListenerHook.class.getName());
   private final RegistryWatcher watcher;
 
   public ImportedServiceListenerHook(RegistryWatcher watcher) {
@@ -22,7 +23,7 @@ public class ImportedServiceListenerHook implements ListenerHook {
   public void added(Collection listeners) {
     for (final ListenerInfo info : (Collection<ListenerInfo>) listeners) {
       if (!info.isRemoved()) {
-        LogUtil.info("Adding listener " + info);
+        log.info("Adding listener " + info);
         LDAPExpr expr = LDAPParser.parseExpression(info.getFilter());
         expr.visit(new ExprVisitor() {
           public void visitExpr(LDAPExpr expr) {

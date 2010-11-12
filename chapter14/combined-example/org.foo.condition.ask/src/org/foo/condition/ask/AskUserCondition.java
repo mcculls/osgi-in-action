@@ -34,8 +34,7 @@ public class AskUserCondition implements Condition {
     if (!m_isMutable) { 
       return m_result;
     }
-    if (context.get("result") == null) {                                    
-      Boolean result = ((Boolean) AccessController.doPrivileged(                 
+    Boolean result = ((Boolean) AccessController.doPrivileged(                 
         new PrivilegedAction() { 
           public Object run() { 
             AskTheUser question = new AskTheUser(m_question);           
@@ -46,14 +45,12 @@ public class AskUserCondition implements Condition {
           } 
         } 
       })); 
-      context.put("result", result);                                       
-    }
     m_isMutable = false; 
     if (m_not) {
-      return (m_result = !((Boolean) context.get("result")).booleanValue());           
+      return (m_result = !result.booleanValue());           
     } 
     else { 
-      return (m_result = ((Boolean) context.get("result")).booleanValue());             
+      return (m_result = result.booleanValue());             
     } 
   }
 } 

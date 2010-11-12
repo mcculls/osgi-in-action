@@ -62,7 +62,7 @@ public class ServletManager {
   
   @Bind(aggregate=true)
   void bindServlet(Servlet servlet, Map attrs) {
-    String ctx = (String) attrs.get("web-contextpath");
+    String ctx = (String) attrs.get("Web-ContextPath");
     if ( ctx != null ) {
       LinkedList<HttpService> snapshot;
       
@@ -85,7 +85,7 @@ public class ServletManager {
   
   @Unbind
   void unbindServlet(Servlet servlet, Map attrs) {
-    String ctx = (String) attrs.get("web-contextpath");
+    String ctx = (String) attrs.get("Web-ContextPath");
     if ( ctx != null ) {
       LinkedList<HttpService> snapshot;
       synchronized( servlets ) {

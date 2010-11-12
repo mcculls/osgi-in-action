@@ -8,10 +8,17 @@
 
   <target name="init">
     <copy todir="${dist}">
-      <fileset dir="${root.dir}/chapter13/gwtapp/bundles" includes="gwtapp.stockprovider-*.jar"/>
-      <fileset dir="${root.dir}/chapter13/gwtapp/bundles" includes="stockwatcher-*.jar"/>
-      <fileset dir="${lib}/dosgi/multi" includes="*.jar"/>
-      <fileset dir="${lib}/spring" includes="*.jar" excludes="org.springframework.*.jar"/>
+      <fileset dir="${root.dir}/chapter15/gwtapp/bundles" includes="gwtapp.stockprovider-*.jar"/>
+      <fileset dir="${root.dir}/chapter15/gwtapp/bundles" includes="stockwatcher-*.jar"/>
+      <fileset dir="${lib}/apache-cxf-dosgi/dosgi_bundles" includes="*.jar">
+        <exclude name="cxf-dosgi-ri-discovery-distributed-*"/>
+      </fileset>
+      <fileset dir="${lib}/gemini-web" includes="*.jar"/>
+      <fileset dir="${lib}/gemini-web/dep" includes="*.jar">
+        <exclude name="org.springframework*"/>
+        <exclude name="com.springsource.javax.xml.bind*"/>
+        <exclude name="com.springsource.javax.xml.stream*"/>
+      </fileset>
     </copy>
   </target>
 

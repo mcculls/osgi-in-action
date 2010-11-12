@@ -22,6 +22,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Collections;
 
 import javax.swing.*;
 
@@ -41,7 +42,7 @@ public class PaintFrame extends JFrame implements MouseListener, MouseMotionList
   private String m_selected;
   private JPanel m_panel;
   private ShapeComponent m_selectedComponent;
-  private Map m_shapes = new HashMap();
+  private Map m_shapes = Collections.synchronizedMap(new HashMap());
   private ActionListener m_reusableActionListener = new ShapeActionListener();
   private SimpleShape m_defaultShape = new DefaultShape();
 
@@ -158,11 +159,7 @@ public class PaintFrame extends JFrame implements MouseListener, MouseMotionList
   void removeShape(SimpleShape shape, Map attrs) {
     final String name = (String) attrs.get(SimpleShape.NAME_PROPERTY);
 
-    DefaultShape delegate = null;
-    
-    synchronized( m_shapes ) {
-      delegate = (DefaultShape) m_shapes.remove(name);
-    }
+    DefaultShape delegate = (DefaultShape) m_shapes.remove(name);
     
     if ( delegate != null ) {
       delegate.dispose();
