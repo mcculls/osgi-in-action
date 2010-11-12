@@ -1,0 +1,5 @@
+
+org.ops4j.pax.web.session.timeout=30
+
+osgi.bundles=org.eclipse.osgi.services@start, \
+../apache-cxf-dosgi-ri-1.2-SNAPSHOT/dosgi_bundles/org.apache.felix.configadmin-1.0.10.jar@start, ../apache-cxf-dosgi-ri-1.2-SNAPSHOT/dosgi_bundles/org.apache.felix.fileinstall-1.0.0.jar@start, ../apache-cxf-dosgi-ri-1.2-SNAPSHOT/dosgi_bundles/com.springsource.org.apache.log4j-1.2.15.jar@start, ../apache-cxf-dosgi-ri-1.2-SNAPSHOT/dosgi_bundles/cxf-dosgi-ri-discovery-distributed-zookeeper-wrapper-1.2-SNAPSHOT.jar@start, ../apache-cxf-dosgi-ri-1.2-SNAPSHOT/dosgi_bundles/cxf-dosgi-ri-discovery-distributed-1.2-SNAPSHOT.jar@start, 

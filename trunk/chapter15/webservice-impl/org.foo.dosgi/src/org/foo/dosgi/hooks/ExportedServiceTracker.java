@@ -17,6 +17,8 @@ import org.osgi.util.tracker.ServiceTracker;
 
 public class ExportedServiceTracker extends ServiceTracker {
 
+  private static final LogUtil log = LogUtil.getLog(ExportedServiceTracker.class.getName());
+  
   private final BundleContext ctx;
   private final Registry registry;
   private final String[] intents;
@@ -42,12 +44,12 @@ public class ExportedServiceTracker extends ServiceTracker {
   @Override
   public Object addingService(ServiceReference ref) {
     Object svc = super.addingService(ref);
-    LogUtil.info("Found " + ref);
+    log.info("Found " + ref);
 
     if (isValidService(ref)) {
       String[] ifaces = findExportedInterfaces(ref);
       for (String iface : ifaces) {
-        LogUtil.info("Registering " + iface + "->" + svc);
+        log.info("Registering " + iface + "->" + svc);
         registry.registerService(ref, iface, svc);
       }
     }

@@ -16,8 +16,6 @@
 
   <target name="init" depends="stockprovider">
     <copy todir="${dist}">
-      <!--fileset dir="${lib}/pax" includes="*.jar"/-->
-      <!--fileset dir="${lib}/spring" includes="*.jar"/-->
       <fileset dir="${lib}/gemini-web" includes="*.jar"/>
       <fileset dir="${lib}/gemini-web/dep" includes="*.jar"/>
     </copy>

@@ -27,4 +27,8 @@ public class RegistryEvent extends EventObject {
   public Type getType() {
     return type;
   }
+  
+  public String toString() {
+    return "RegistryEvent[" + type + ":" + ref + "]"; 
+  }
 }

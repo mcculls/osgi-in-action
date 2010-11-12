@@ -2,7 +2,6 @@ package org.foo.dosgi.helper;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,6 +23,8 @@ import org.osgi.framework.ServiceRegistration;
 
 public class RegistryWatcher implements RegistryListener {
 
+  private static final LogUtil log = LogUtil.getLog(RegistryWatcher.class.getName());
+  
   static class Watch {
     final String clazz;
     final String filter;
@@ -79,15 +80,7 @@ public class RegistryWatcher implements RegistryListener {
 
     public ServiceRegistration call() throws Exception {
       Hashtable props = new Hashtable(ref.getProperties());
-      return ctx.registerService(ref.getInterface(), new ServiceFactory() {
-        public Object getService(Bundle bundle, ServiceRegistration reg) {
-          return ref.getService();
-        }
-        
-        public void ungetService(Bundle bundle, ServiceRegistration reg,
-            Object service) {
-        }        
-      },props);
+      return ctx.registerService(ref.getInterface(), ref.getService(), props);
     }
   }
 
@@ -129,14 +122,18 @@ public class RegistryWatcher implements RegistryListener {
     synchronized (watches) {
       Integer count = watches.get(watch);
       if (count == null) {
-        LogUtil.info("Adding watch " + clazz + " -> " + filter);
+        log.info("Adding watch " + clazz + " -> " + filter);
         Collection<RegistryServiceReference> services = registry
             .findServices(clazz, filter);
         for (RegistryServiceReference ref : services) {
           if (!regs.containsKey(ref)) {
+            log.debug("Registering " + ref);
             Future<ServiceRegistration> future = exec
                 .submit(new Registration(ref));
             regs.put(ref, future);
+          }
+          else {
+            log.debug("Already registered " + ref);
           }
         }
       } else {
@@ -148,10 +145,13 @@ public class RegistryWatcher implements RegistryListener {
   public void findServices(String clazz, String filter) {
     synchronized (watches) {
       if (!watches.containsKey(new Watch(clazz, filter))) {
-        LogUtil.info("Finding services " + clazz + " -> " + filter);
+        //LogUtil.info("Finding services " + clazz + " -> " + filter);
 
         Collection<RegistryServiceReference> services = registry
             .findServices(clazz, filter);
+        if ( !"org.osgi.service.log.LogService".equals(clazz) ) {
+          log.debug("Found " + services.size() + " for " + clazz + " -> " + filter);
+        }
         for (RegistryServiceReference ref : services) {
           if (!regs.containsKey(ref)) {
             Future<ServiceRegistration> future = exec
@@ -171,7 +171,7 @@ public class RegistryWatcher implements RegistryListener {
       count = count - 1;
       if ( count == 0 ) {
         watches.remove(removed);
-        LogUtil.info("Removing watch " + clazz + " -> " + filter);
+        log.info("Removing watch " + clazz + " -> " + filter);
         for (Iterator<RegistryServiceReference> iter = regs.keySet()
             .iterator(); iter.hasNext();) {
           RegistryServiceReference ref = iter.next();
@@ -215,7 +215,9 @@ public class RegistryWatcher implements RegistryListener {
 
   private void handleAdd(RegistryServiceReference ref) {
     if (!regs.containsKey(ref)) {
+      log.debug("Added " + ref);
       for (Watch w : watches.keySet()) {
+        log.debug("Checking " + w);
         if (w.matches(ref)) {
           Future<ServiceRegistration> future = exec
               .submit(new Registration(ref));
@@ -223,13 +225,20 @@ public class RegistryWatcher implements RegistryListener {
           break;
         }
       }
+    } else {
+      log.debug("Discarding " + ref);
     }
   }
 
   private void handleRemove(RegistryServiceReference ref) {
     Future<ServiceRegistration> future = regs.remove(ref);
+    log.debug("Removed " + ref);
     if (future != null) {
       exec.submit(new Unregister(future));
+      log.debug("Unregistering " + ref);
+    }
+    else {
+      log.debug("Unknown registration");
     }
   }
 }

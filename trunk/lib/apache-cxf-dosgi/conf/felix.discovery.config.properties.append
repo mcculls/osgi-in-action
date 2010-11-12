@@ -1,0 +1,10 @@
+
+org.ops4j.pax.web.session.timeout=30
+org.osgi.framework.startlevel.beginning=105
+felix.auto.start.100=http://repo2.maven.org/maven2/org/osgi/org.osgi.compendium/4.1.0/org.osgi.compendium-4.1.0.jar
+    
+felix.auto.start.101=file:apache-cxf-dosgi-ri-1.2-SNAPSHOT/dosgi_bundles/org.apache.felix.configadmin-1.0.10.jar
+felix.auto.start.102=file:apache-cxf-dosgi-ri-1.2-SNAPSHOT/dosgi_bundles/org.apache.felix.fileinstall-1.0.0.jar
+felix.auto.start.103=file:apache-cxf-dosgi-ri-1.2-SNAPSHOT/dosgi_bundles/com.springsource.org.apache.log4j-1.2.15.jar
+felix.auto.start.104=file:apache-cxf-dosgi-ri-1.2-SNAPSHOT/dosgi_bundles/cxf-dosgi-ri-discovery-distributed-zookeeper-wrapper-1.2-SNAPSHOT.jar
+felix.auto.start.105=file:apache-cxf-dosgi-ri-1.2-SNAPSHOT/dosgi_bundles/cxf-dosgi-ri-discovery-distributed-1.2-SNAPSHOT.jar

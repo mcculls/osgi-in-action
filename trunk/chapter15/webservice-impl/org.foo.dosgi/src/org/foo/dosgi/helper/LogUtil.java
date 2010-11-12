@@ -6,56 +6,62 @@ import org.osgi.service.log.LogService;
 
 public class LogUtil {
   public static BundleContext ctx;
+  private final String id;
 
-  public static void debug(String msg) {
+  private LogUtil(String id) {
+    this.id = id;    
+  }
+
+  public void debug(String msg) {
     debug(msg, null);
   }
 
-  public static void debug(String msg, Throwable t) {
-    log(ctx, LogService.LOG_DEBUG, msg, t);
+  public void debug(String msg, Throwable t) {
+    log(ctx, LogService.LOG_DEBUG, id, msg, t);
   }
 
-  public static void info(String msg) {
+  public void info(String msg) {
     info(msg, null);
   }
 
-  public static void info(String msg, Throwable t) {
-    log(ctx, LogService.LOG_INFO, msg, t);
+  public void info(String msg, Throwable t) {
+    log(ctx, LogService.LOG_INFO, id, msg, t);
   }
 
-  public static void warn(String msg) {
+  public void warn(String msg) {
     warn(msg, null);
   }
 
-  public static void warn(String msg, Throwable t) {
-    log(ctx, LogService.LOG_WARNING, msg, t);
+  public void warn(String msg, Throwable t) {
+    log(ctx, LogService.LOG_WARNING, id, msg, t);
   }
-
-  private static void log(BundleContext ctx, int level, String msg) {
-    log(ctx, level, msg, null);
+  
+  public static LogUtil getLog(String id) {
+    return new LogUtil(id);
   }
-
-  private static void log(BundleContext ctx, int level, String msg,
+  
+  private static void log(BundleContext ctx, int level, String id, String msg,
       Throwable t) {
+    String out = id + ": " + msg;
     ServiceReference ref = ctx.getServiceReference(LogService.class
         .getName());
     if (ref != null) {
       LogService log = (LogService) ctx.getService(ref);
       if (log != null) {
         try {
-          log.log(level, msg, t);
+          log.log(level, out, t);
           return;
         } finally {
           ctx.ungetService(ref);
         }
       }
     }
-    //    
-    // // ok not found so
-    // System.err.println( msg );
-    // if ( t != null ) {
-    // t.printStackTrace(System.err);
-    // }
+        
+//    // ok not found so
+//    System.err.println( out );
+//    if ( t != null ) {
+//      t.printStackTrace(System.err);
+//    }
   }
 
 }

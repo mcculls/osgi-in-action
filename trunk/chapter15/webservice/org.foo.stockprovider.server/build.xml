@@ -8,8 +8,8 @@
 
   <target name="init">
     <copy todir="${dist}">
-      <fileset dir="${root.dir}/chapter13/gwtapp/bundles" includes="gwtapp.stockprovider-*.jar"/>
-      <fileset dir="${lib}/dosgi/multi" includes="*.jar"/>
+      <fileset dir="${root.dir}/chapter15/gwtapp/bundles" includes="gwtapp.stockprovider-*.jar"/>
+      <fileset dir="${lib}/apache-cxf-dosgi/dosgi_bundles" includes="*.jar"/>
     </copy>
   </target>
 

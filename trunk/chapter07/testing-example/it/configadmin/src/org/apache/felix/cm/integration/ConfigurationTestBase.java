@@ -36,7 +36,7 @@ import org.apache.felix.cm.integration.helper.MyTinyBundle;
 import org.apache.felix.cm.integration.helper.UpdateThreadSignalTask;
 import org.junit.After;
 import org.junit.Before;
-import org.ops4j.pax.exam.CoreOptions;
+import static org.ops4j.pax.exam.CoreOptions.*;
 import org.ops4j.pax.exam.Inject;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.swissbox.tinybundles.core.TinyBundles;
@@ -92,16 +92,13 @@ public abstract class ConfigurationTestBase
     @org.ops4j.pax.exam.junit.Configuration
     public static Option[] configuration()
     {
-        return CoreOptions.options(
-            CoreOptions.provision(
-                CoreOptions.bundle( new File("bundles/configadmin.jar").toURI().toString() ),
-                CoreOptions.mavenBundle( "org.ops4j.pax.swissbox", "pax-swissbox-tinybundles", "1.0.0" )
-            )
-//         , PaxRunnerOptions.vmOption("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=30303" )
-        // , PaxRunnerOptions.logProfile()
+        return options(
+            provision(
+                bundle(new File("bundles/configadmin.jar").toURI().toString()),
+                mavenBundle(
+                    "org.ops4j.pax.swissbox", "pax-swissbox-tinybundles", "1.0.0"))
         );
     }
-
 
     @Before
     public void setUp()
