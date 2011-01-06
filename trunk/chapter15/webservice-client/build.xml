@@ -7,6 +7,10 @@
   <property file="${example.dir}/build.properties"/>
   <import file="${example.dir}/../build.xml"/>
 
+  <target name="gwt.app">
+    <ant dir="${example.dir}/../gwtapp" inheritAll="false"/>
+  </target>
+
   <target name="api">
     <ant dir="${example.dir}/org.foo.webservice" inheritAll="false"/>
   </target>
