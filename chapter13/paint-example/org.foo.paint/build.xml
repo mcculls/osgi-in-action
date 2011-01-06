@@ -22,4 +22,6 @@
     <delete file="${example.dir}/paint.jar"/>
   </target>
 
+  <target name="local.pde"/>
+
 </project>
