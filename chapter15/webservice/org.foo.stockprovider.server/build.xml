@@ -6,7 +6,7 @@
 
   <target name="compile" depends="common.compile"/>
 
-  <target name="init">
+  <target name="init" depends="gwt.app">
     <copy todir="${dist}">
       <fileset dir="${root.dir}/chapter15/gwtapp/bundles" includes="gwtapp.stockprovider-*.jar"/>
       <fileset dir="${lib}/apache-cxf-dosgi/dosgi_bundles" includes="*.jar"/>

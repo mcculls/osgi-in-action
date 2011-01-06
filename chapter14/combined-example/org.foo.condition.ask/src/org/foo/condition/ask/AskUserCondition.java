@@ -9,8 +9,8 @@ public class AskUserCondition implements Condition {
   private final Bundle m_bundle; 
   private final String m_question; 
   private final boolean m_not; 
-  private volatile boolean m_result = false;
-  private volatile boolean m_isMutable = true;
+  private boolean m_result = false;
+  private boolean m_alreadyAsked = false;
 
   public AskUserCondition(Bundle bundle, ConditionInfo info) {           
     m_bundle = bundle; 
@@ -22,16 +22,16 @@ public class AskUserCondition implements Condition {
     return new AskUserCondition(bundle, info);                                 
   } 
   public boolean isMutable() {                                           
-    return m_isMutable; 
+    return false; 
   } 
   public boolean isPostponed() {                                        
     return true; 
   } 
   public boolean isSatisfied() {     
-    return m_result;                                     
+    return false;                                     
   }
-  public boolean isSatisfied(Condition[] conditions, Dictionary context) { 
-    if (!m_isMutable) { 
+  public synchronized boolean isSatisfied(Condition[] conditions, Dictionary context) { 
+    if (m_alreadyAsked) { 
       return m_result;
     }
     Boolean result = ((Boolean) AccessController.doPrivileged(                 
@@ -45,7 +45,7 @@ public class AskUserCondition implements Condition {
           } 
         } 
       })); 
-    m_isMutable = false; 
+    m_alreadyAsked = true; 
     if (m_not) {
       return (m_result = !result.booleanValue());           
     } 
