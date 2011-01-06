@@ -27,7 +27,8 @@
       <fileset dir="${lib}" includes="osgi.*.jar"/>
     </path>
     <javac srcdir="${src}" destdir="${build}" debug="on"
-           source="${compile.level}" target="${compile.level}">
+           source="${compile.level}" target="${compile.level}"
+           includeantruntime="false">
       <classpath>
         <path refid="external.classpath"/>
         <fileset dir="${dist}" includes="*.jar"/>
