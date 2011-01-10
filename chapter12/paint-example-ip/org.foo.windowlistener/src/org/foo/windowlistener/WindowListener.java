@@ -62,6 +62,7 @@ public class WindowListener extends WindowAdapter {
       m_log.log( LogService.LOG_INFO, "Window closed" );
       m_context.getBundle(0).stop();
     } catch (BundleException e) {
+    } catch (IllegalStateException e) {
     }
   }  
 }

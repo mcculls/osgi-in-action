@@ -51,13 +51,14 @@ public class StockPriceServiceImpl extends RemoteServiceServlet implements Stock
 
   private StockPrice[] readPrices(StockProvider provider, String[] symbols) throws DelistedException {
     StockPrice[] prices = new StockPrice[symbols.length];
-    Map<String, Double> stocks = provider.getStocks(symbols);
     
+    Map<String, Double> stocks = provider.getStocks(symbols);    
+    Map<String, Double> last = updateStockPrices(stocks);
+  
     for (int i=0; i<symbols.length; i++) {
       Double newPrice = stocks.get( symbols[i] );
-      Map<String, Double> last = updateStockPrices(stocks);
       if ( newPrice == null ) {
-        throw new DelistedException(symbols[i]);
+        throw new DelistedException(symbols[i]); 
       }
       else {
         Double oldPrice = last.get( symbols[i] );

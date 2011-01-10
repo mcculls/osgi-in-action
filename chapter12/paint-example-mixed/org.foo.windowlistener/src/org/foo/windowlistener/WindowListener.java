@@ -62,6 +62,7 @@ public class WindowListener extends WindowAdapter {
     try {
       m_context.getBundle(0).stop();
     } catch (BundleException e) {
+    } catch (IllegalStateException e) {
     }
   }  
 }
