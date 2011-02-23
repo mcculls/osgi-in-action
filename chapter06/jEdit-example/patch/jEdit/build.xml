@@ -85,7 +85,7 @@
 		<!-- /jar -->
 
 		<taskdef resource="aQute/bnd/ant/taskdef.properties"
-			classpath="../../../lib/bnd-0.0.356.jar" />
+			classpath="../../../lib/bnd-0.0.384.jar" />
 
 		<bnd classpath="${build.directory}"
 			files="jedit-thirdparty.bnd,jedit-main.bnd,jedit-engine.bnd" />
