@@ -44,6 +44,12 @@
   <target name="local.pde" depends="local.dist"/>
   <target name="local.clean"/>
 
+  <target name="dist" depends="local.dist">
+    <echo message="------------------------------------------------------------------------------------------------"/>
+    <echo message="When running on OSX add -Dorg.osgi.framework.bootdelegation=com.apple.* before the -jar argument"/>
+    <echo message="------------------------------------------------------------------------------------------------"/>
+  </target>
+
   <target name="wipe" depends="local.wipe">
     <ant dir="org.foo.jedit.extender" target="local.wipe" inheritAll="false"/>
   </target>
