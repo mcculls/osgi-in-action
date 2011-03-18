@@ -1,21 +1,64 @@
 OSGi in Action source code examples
 ===================================
 
-I. Included Software
+I. Example Source
 
-This product includes software developed at
-The Apache Software Foundation (http://www.apache.org/).
 Licensed under the Apache License 2.0.
 
 
 II. Used Software
 
-This product uses software developed at
+The examples use software developed at
 The OSGi Alliance (http://www.osgi.org/).
-Copyright 2006-2009 The OSGi Alliance.
+Licensed under the Apache License 2.0.
+
+The examples use software developed at
+The Apache Software Foundation (http://www.apache.org/).
+Licensed under the Apache License 2.0.
+
+The examples use software developed at
+The Eclipse Foundation (http://www.eclipse.org/).
+Licensed under the Eclipse Public License 1.0.
+
+The examples use software developed at
+Open Participation Software for Java (http://www.ops4j.org/).
+Licensed under the Apache License 2.0.
+
+The examples use software developed at
+aQute (http://www.aqute.biz/).
+Licensed under the Apache License 2.0.
+
+The examples use software developed at
+Google, Inc. (http://www.google.com/).
+Licensed under the Apache License 2.0.
+
+The examples use software developed at
+SpringSource (http://www.springsource.com/).
+Licensed under the Apache License 2.0.
+
+The examples use software developed at
+Oracle, Inc. (http://www.oracle.com/).
+Licensed under the GNU General Public License 2.0.
+
+The examples use software developed at
+jEdit (http://www.jedit.org/).
+Licensed under the GNU General Public License 2.0.
+
+The examples use software developed at
+JUnit (http://www.junit.org/).
+Licensed under the Apache License 2.0.
+
+The examples use software developed at
+Cobertura (http://cobertura.sourceforge.net/).
+Licensed under the GNU General Public License 2.0.
+
+The examples use software developed at
+EasyMock (http://easymock.org/).
 Licensed under the Apache License 2.0.
 
 
 III. License Summary
 - Apache License 2.0
+- Eclipse Public License 1.0
+- GNU General Public License 2.0
 

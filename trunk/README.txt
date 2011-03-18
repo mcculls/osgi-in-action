@@ -11,95 +11,107 @@ Contents:
 
  chapter01
 
-  * greeting-example      - "Hello, world" using each OSGi layer in turn
+  * greeting-example          - "Hello, world" using each OSGi layer in turn
 
  chapter02
 
-  * paint-nonmodular      - Original non-OSGi paint application
+  * paint-nonmodular          - Original non-OSGi paint application
 
-  * paint-modular         - Painting with modularity
+  * paint-modular             - Painting with modularity
 
  chapter03
 
-  * shell-example         - Remote shell example (telnet 127.0.0.1 7070)
+  * shell-example             - Remote shell example (telnet 127.0.0.1 7070)
 
-  * paint-example         - Painting with lifecycles (extender pattern)
+  * paint-example             - Painting with lifecycles (extender pattern)
 
  chapter04
 
-  * dynamics              - Examples & counter-examples of handling services
+  * dynamics                  - Examples & counter-examples of handling services
 
-  * paint-example         - Painting with services (whiteboard pattern)
+  * paint-example             - Painting with services (whiteboard pattern)
 
  chapter05
 
-  * paint-example         - Painting with advanced modularity
+  * paint-example             - Painting with advanced modularity
 
  chapter06
 
-  * BeanUtils-example     - Wrapping BeanUtils
+  * BeanUtils-example         - Wrapping BeanUtils
 
-  * HttpClient-example    - Wrapping HttpClient
+  * HttpClient-example        - Wrapping HttpClient
 
-  * jEdit-example         - Migrating jEdit to OSGi
+  * jEdit-example             - Migrating jEdit to OSGi
 
  chapter07
 
-  * migration-example     - Migrating tests to OSGi
+  * migration-example         - Migrating tests to OSGi
 
-  * mocking-example       - Mocking OSGi APIs
+  * mocking-example           - Mocking OSGi APIs
 
-  * testing-example       - OSGi integration testing
+  * testing-example           - OSGi integration testing
 
  chapter08
 
-  * debugging-bundles     - Debugging OSGi code
+  * debugging-bundles         - Debugging OSGi code
 
-  * classloading          - Common classloading issues
+  * classloading              - Common classloading issues
 
-  * memory-leaks          - OSGi memory leak example
+  * memory-leaks              - OSGi memory leak example
 
-  * dangling-services     - Dangling service example
+  * dangling-services         - Dangling service example
 
  chapter09
 
-  * shell-example         - Advanced shell example (telnet 127.0.0.1 7070)
-
-  * managed-example       - Configuration example (telnet 127.0.0.1 7070)
+  * combined-example          - Managed shell example
 
  chapter10
 
-  * non-component-example - Non-component example
-
-  * paint-example-common  - Shared component code
-
-  * paint-example-ds      - Declarative Services example
-
-  * paint-example-bp      - Blueprint example
-
-  * paint-example-ip      - Apache Felix iPOJO example
-
-  * paint-example-mixed   - Mixed component model example
+  * combined-example          - Managed paint example
 
  chapter11
 
-  * paint-example         - Launching and embedding example
+  * non-component-example     - Non-component example
+
+  * paint-example-common      - Shared component code
+
+  * paint-example-ds          - Declarative Services example
 
  chapter12
 
+  * non-component-example     - Non-component example
+
+  * paint-example-common      - Shared component code
+
+  * paint-example-bp          - Blueprint example
+
+  * paint-example-bp-fragment - Blueprint fragment example
+
+  * paint-example-ip          - Apache Felix iPOJO example
+
+  * paint-example-mixed       - Mixed component model example
+
  chapter13
 
-  * httpservice           - Simple servlet example
+  * paint-example             - Launching and embedding example
 
-  * pax-web               - Advanced JSP example
+ chapter14
 
-  * gwtapp                - OSGi web application (GWT)
+  * combined-example          - Secure paint example
 
-  * webservice            - Remote OSGi service example
+ chapter15
 
-  * webservice-client     - ... client
+  * httpservice               - Simple servlet example
 
-  * webservice-impl       - ... distribution provider
+  * pax-web                   - Advanced JSP example
+
+  * gwtapp                    - OSGi web application (GWT)
+
+  * webservice                - Remote OSGi service example
+
+  * webservice-client         - ... client
+
+  * webservice-impl           - ... distribution provider
 
 Building:
 
