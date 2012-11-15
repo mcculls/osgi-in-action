@@ -9,7 +9,7 @@
 
   <target name="local.dist" depends="compile">
     <jar destfile="${dist}/launcher.jar">
-      <zipfileset src="${felix.jar}"/>
+      <zipfileset src="${felix.jar}" excludes="default.properties"/>
       <fileset dir="${build}"/>
       <manifest>
         <attribute name="Main-Class" value="${module}.Main"/>
